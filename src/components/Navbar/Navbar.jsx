@@ -4,8 +4,8 @@ import "../Navbar/Navbar.css";
 import { SiAlchemy } from "react-icons/si";
 import { FaSortDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Login from "../../pages/Login";
-import Sigup from "../../pages/Sigup";
+import Login from "../../pages/common/Login";
+import Sigup from "../../pages/common/Sigup";
 
 function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);

@@ -1,6 +1,7 @@
 import React from "react";
 import CourseCard from "../../components/cards/CourseCard";
 import CourseCarousel from "../../components/carousels/CourseCarousel";
+import { Link } from "react-router-dom";
 
 function StudentHome() {
   return (
@@ -59,7 +60,7 @@ function StudentHome() {
               <button>Music</button>
             </div>
             <div className="grid grid-cols-4 gap-x-16 gap-y-5 mt-10">
-              <CourseCard />
+              <Link to='/student/coursepage'><CourseCard /></Link>
               <CourseCard />
               <CourseCard />
               <CourseCard />

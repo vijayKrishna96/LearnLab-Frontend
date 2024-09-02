@@ -8,6 +8,7 @@ import InstructorLayout from "../layouts/InstructorLayout";
 import InstructorProfile from "../pages/instructor/InstructorProfile";
 import AddCourse from "../pages/instructor/AddCourse";
 import Cart from "../components/Cart";
+import CoursePage from "../pages/common/CoursePage";
 
 
 export const router = createBrowserRouter([
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
           {
             path:'profile',
             element:<StudentProfile/>
+          },
+          {
+              path: 'coursepage',
+              element: <CoursePage/>
           },
           {
             path: 'cart',
