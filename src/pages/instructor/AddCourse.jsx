@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { MdDeleteSweep } from "react-icons/md";
+import { useParams } from "react-router-dom";
+import { ALL_CATEGORY_API, USER_DETAILS_API } from "../../Utils/Constants/Api";
 
-function AddCourse() {
+const AddCourse = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState([]);
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
-  const [instructor, setInstructor] = useState("");
+  const [courseImage, setCourseImage] = useState(null);
+  const [userData, setUserData] = useState("");
   const [modules, setModules] = useState([
     {
       moduleNumber: 1,
@@ -15,11 +19,14 @@ function AddCourse() {
         {
           title: "",
           duration: "",
-          resource: null,
+          image: null,
         },
       ],
     },
   ]);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const { userId } = useParams();
 
   const handleAddModule = () => {
     setModules([
@@ -31,7 +38,7 @@ function AddCourse() {
           {
             title: "",
             duration: "",
-            resource: null,
+            image: null,
           },
         ],
       },
@@ -43,7 +50,7 @@ function AddCourse() {
     newModules[moduleIndex].lessons.push({
       title: "",
       duration: "",
-      resource: null,
+      image: null,
     });
     setModules(newModules);
   };
@@ -62,16 +69,58 @@ function AddCourse() {
     setModules(newModules);
   };
 
-  const handleLessonFileChange = (moduleIndex, lessonIndex, e) => {
+  const handleLessonImageChange = (moduleIndex, lessonIndex, e) => {
     const file = e.target.files[0];
     const newModules = [...modules];
-    newModules[moduleIndex].lessons[lessonIndex].resource = file;
+    newModules[moduleIndex].lessons[lessonIndex].image = file;
     setModules(newModules);
   };
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleCourseImageChange = (e) => {
+    setCourseImage(e.target.files[0]);
   };
+
+  const handleDeleteModule = (moduleIndex) => {
+    setModules(modules.filter((_, index) => index !== moduleIndex));
+  };
+
+  const handleDeleteLesson = (moduleIndex, lessonIndex) => {
+    const newModules = [...modules];
+    newModules[moduleIndex].lessons = newModules[moduleIndex].lessons.filter(
+      (_, index) => index !== lessonIndex
+    );
+    setModules(newModules);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(`${USER_DETAILS_API}/${userId}`);
+        setUserData(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    if (userId) {
+      fetchUserDetails();
+    }
+
+    const getAllCategories = async () => {
+      try {
+        const response = await axios.get(ALL_CATEGORY_API);
+        setCategory(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    getAllCategories();
+  }, [userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,36 +128,35 @@ function AddCourse() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("category", category);
+    formData.append("category", selectedOption);
     formData.append("price", price);
-    formData.append("instructor", instructor);
+    formData.append("instructor", userId);
 
-    if (image) {
-      formData.append("image", image);
+    // Add course image as the first image
+    if (courseImage) {
+      formData.append("images", courseImage);
     }
 
-    modules.forEach((mod, modIndex) => {
-      formData.append(`modules[${modIndex}][moduleNumber]`, mod.moduleNumber);
-      formData.append(`modules[${modIndex}][title]`, mod.title);
-
-      mod.lessons.forEach((lesson, lessonIndex) => {
-        formData.append(
-          `modules[${modIndex}][lessons][${lessonIndex}][title]`,
-          lesson.title
-        );
-        formData.append(
-          `modules[${modIndex}][lessons][${lessonIndex}][duration]`,
-          lesson.duration
-        );
-
-        if (lesson.resource) {
-          formData.append(
-            `modules[${modIndex}][lessons][${lessonIndex}][resource]`,
-            lesson.resource
-          );
+    // Add lesson images
+    modules.forEach(module => {
+      module.lessons.forEach(lesson => {
+        if (lesson.image) {
+          formData.append("images", lesson.image);
         }
       });
     });
+
+    // Add modules data as a JSON string
+    const modulesData = modules.map(module => ({
+      moduleNumber: module.moduleNumber,
+      title: module.title,
+      lessons: module.lessons.map(lesson => ({
+        title: lesson.title,
+        duration: lesson.duration
+      }))
+    }));
+
+    formData.append("modules", JSON.stringify(modulesData));
 
     try {
       const response = await axios.post(
@@ -121,27 +169,21 @@ function AddCourse() {
         }
       );
       console.log("Course added successfully", response.data);
+      alert('Course Created Successfully');
+      // Add success notification or redirect here
     } catch (error) {
-      if (error.response) {
-        // Server responded with a status other than 2xx
-        console.error("Server responded with an error:", error.response.data);
-      } else if (error.request) {
-        // Request was made but no response received
-        console.error("No response received:", error.request);
-      } else {
-        // Something else caused the error
-        console.error("Error:", error.message);
-      }
+      console.error("Error adding course:", error.response?.data || error.message);
+      // Add error notification here
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg m-10">
+    <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-lg m-10">
       <h2 className="text-2xl font-bold mb-4">Create a New Course</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="bg-gray-100 p-4">
+        <div className="bg-primary p-4">
           {/* Course Title */}
-          <div className="mb-4 ">
+          <div className="mb-4">
             <label className="block text-gray-700">Course Title</label>
             <input
               type="text"
@@ -165,63 +207,82 @@ function AddCourse() {
             />
           </div>
 
-          {/* Category */}
           <div className="mb-4">
-            <label className="block text-gray-700">Category</label>
-            <input
-              type="text"
-              name="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="mt-1 p-2 w-full border rounded-lg"
-            />
+            <div className="flex flex-row gap-4">
+              {/* Category Selection */}
+              <select
+                className="mt-1 p-2 border w-1/2 rounded-lg"
+                value={selectedOption}
+                onChange={handleCategoryChange}
+                required
+              >
+                <option value="" disabled>
+                  Select Category
+                </option>
+                {category?.map((op) => (
+                  <option key={op._id} value={op._id}>
+                    {op.name}
+                  </option>
+                ))}
+              </select>
+
+              {/* Price Input */}
+              <div className="w-1/2">
+                <input
+                  type="number"
+                  name="price"
+                  placeholder="Price ($)"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  className="mt-1 p-2 w-full border rounded-lg"
+                  required
+                />
+              </div>
+            </div>
           </div>
 
-          {/* Price */}
-          <div className="mb-4">
-            <label className="block text-gray-700">Price ($)</label>
-            <input
-              type="number"
-              name="price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="mt-1 p-2 w-full border rounded-lg"
-              required
-            />
-          </div>
+          <div className="flex gap-4 mb-4">
+            {/* Instructor Info */}
+            <div className="w-1/2">
+              <label className="block text-gray-700">Instructor Name</label>
+              <input
+                type="text"
+                value={userData.name}
+                className="mt-1 p-2 w-full border rounded-lg"
+                disabled
+              />
+            </div>
 
-          {/* Instructor ID */}
-          <div className="mb-4">
-            <label className="block text-gray-700">Instructor ID</label>
-            <input
-              type="text"
-              name="instructor"
-              value={instructor}
-              onChange={(e) => setInstructor(e.target.value)}
-              className="mt-1 p-2 w-full border rounded-lg"
-              required
-            />
-          </div>
-
-          {/* Course Image */}
-          <div className="mb-4">
-            <label className="block text-gray-700">Course Image</label>
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="mt-1 p-2 w-full border rounded-lg"
-            />
+            {/* Course Image Upload */}
+            <div className="w-1/2 flex items-center mt-5 gap-6">
+              <label className="text-gray-700 ml-8">Course Image</label>
+              <input
+                type="file"
+                name="images"
+                accept="image/*"
+                onChange={handleCourseImageChange}
+                className="mt-1 p-2 border rounded-lg"
+              />
+            </div>
           </div>
         </div>
 
         {/* Modules and Lessons */}
-        {modules.map((module, index) => (
-          <div key={index} className="mb-6 border p-4 rounded-lg bg-gray-100">
+        {modules.map((module, moduleIndex) => (
+          <div
+            key={moduleIndex}
+            className="mb-6 border p-4 rounded-lg bg-gray-100 relative"
+          >
             <h3 className="text-lg font-semibold mb-2">
               Module {module.moduleNumber}
             </h3>
+            <button
+              type="button"
+              className="absolute top-6 right-6 text-2xl text-red-500 hover:text-red-700"
+              onClick={() => handleDeleteModule(moduleIndex)}
+            >
+              <MdDeleteSweep />
+            </button>
 
             {/* Module Title */}
             <div className="mb-4">
@@ -230,7 +291,7 @@ function AddCourse() {
                 type="text"
                 name="title"
                 value={module.title}
-                onChange={(e) => handleModuleChange(index, e)}
+                onChange={(e) => handleModuleChange(moduleIndex, e)}
                 className="mt-1 p-2 w-full border rounded-lg"
                 required
               />
@@ -240,9 +301,16 @@ function AddCourse() {
             {module.lessons.map((lesson, lessonIndex) => (
               <div
                 key={lessonIndex}
-                className="mb-4 p-4 border rounded-lg bg-gray-100 shadow-sm"
+                className="mb-4 p-4 border rounded-lg bg-gray-100 shadow-sm relative"
               >
-                <h4 className="font-semibold mb-2">Lesson {lessonIndex + 1}</h4>
+                <h3 className="font-semibold mb-2">Lesson {lessonIndex + 1}</h3>
+                <button
+                  type="button"
+                  className="absolute top-6 right-6 text-2xl text-red-500 hover:text-red-700"
+                  onClick={() => handleDeleteLesson(moduleIndex, lessonIndex)}
+                >
+                  <MdDeleteSweep />
+                </button>
 
                 {/* Lesson Title */}
                 <div className="mb-2">
@@ -251,7 +319,9 @@ function AddCourse() {
                     type="text"
                     name="title"
                     value={lesson.title}
-                    onChange={(e) => handleLessonChange(index, lessonIndex, e)}
+                    onChange={(e) =>
+                      handleLessonChange(moduleIndex, lessonIndex, e)
+                    }
                     className="mt-1 p-2 w-full border rounded-lg"
                     required
                   />
@@ -264,21 +334,23 @@ function AddCourse() {
                     type="text"
                     name="duration"
                     value={lesson.duration}
-                    onChange={(e) => handleLessonChange(index, lessonIndex, e)}
+                    onChange={(e) =>
+                      handleLessonChange(moduleIndex, lessonIndex, e)
+                    }
                     className="mt-1 p-2 w-full border rounded-lg"
                     required
                   />
                 </div>
 
-                {/* Lesson Resource */}
+                {/* Lesson Image Upload */}
                 <div className="mb-2">
-                  <label className="block text-gray-600">Lesson Resource</label>
+                  <label className="block text-gray-600">Lesson Image</label>
                   <input
                     type="file"
-                    name="resource" // Corrected name
+                    name="images"
                     accept="image/*"
                     onChange={(e) =>
-                      handleLessonFileChange(index, lessonIndex, e)
+                      handleLessonImageChange(moduleIndex, lessonIndex, e)
                     }
                     className="mt-1 p-2 w-full border rounded-lg"
                   />
@@ -289,7 +361,7 @@ function AddCourse() {
             {/* Add Lesson Button */}
             <button
               type="button"
-              onClick={() => handleAddLesson(index)}
+              onClick={() => handleAddLesson(moduleIndex)}
               className="text-blue-500 hover:text-blue-700 mt-2"
             >
               + Add Lesson
@@ -318,6 +390,6 @@ function AddCourse() {
       </form>
     </div>
   );
-}
+};
 
 export default AddCourse;

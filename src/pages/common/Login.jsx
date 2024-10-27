@@ -1,19 +1,59 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { IoCloseCircle } from "react-icons/io5";
+import { LOGIN_API } from "../../Utils/Constants/Api";
+import Loader from "../Loader/Loader";
+import { useNavigate } from "react-router-dom";
+import { userLogin } from "../../services/userApi";
 
-function Login({ isOpen, onClose, onSubmit }) {
+
+// eslint-disable-next-line react/prop-types
+function Login({ isOpen, onClose }) {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading , setLoading] = useState(false)
 
-  const handleLogin = (event) => {
+  const navigate = useNavigate();
+
+  const handleLogin = async (event) => {
     event.preventDefault();
+    setLoading(true);
+  
     const data = {
       email: email,
       password: password,
     };
-    onSubmit(data); // Call onSubmit with the login data
-  };
+  
+    try {
+      // Send the login data to the login route using axios
+      const response = await userLogin(data); 
+      setLoading(false);
+  
+      const userId = response.user.id; // Extract userId from the response
 
+      if (response.user.role === 'student') {
+        // Navigate to student route with userId
+        navigate(`/student/${userId}`);
+        onClose(); // Close the modal
+      } else if (response.user.role === 'instructor') {
+        // Navigate to instructor route with userId
+        navigate(`/instructor/${userId}`);
+        onClose(); 
+      }
+    } catch (err) {
+      setLoading(false);
+      // Handle error cases
+      if (err.response?.data?.message === 'User not found') {
+        alert('User not found, please check the User ID.');
+      } else if (err.response?.data?.message === 'Invalid password') {
+        alert('Invalid password, please try again.');
+      } else if (err.response?.data?.message === 'User is not active') {
+        alert('User is not active');
+      }
+    }
+  };
+  
   if (!isOpen) return null; // Only render the component if isOpen is true
 
   return (
@@ -52,11 +92,11 @@ function Login({ isOpen, onClose, onSubmit }) {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <input
-            type="submit"
-            value="Sign in"
-            className="btn text-center w-full my-5 bg-[#00EACE] p-2 text-lg text-black"
-          />
+          <button type="submit" 
+          className="btn text-center w-full my-5 bg-primarybtn p-2 text-lg text-white"
+          >
+            {loading ? <Loader/> : "SigIn"}
+          </button>
           <p>
             Forgot password?{" "}
             <a href="#" className="text-sky-500">

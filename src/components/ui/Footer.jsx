@@ -2,7 +2,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="mt-12  p-6 bg-[#fddde6]">
+    <footer className="mt-12  p-6 bg-primary">
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-6">
         <div className="col-span-3">
           <div className="flex items-center space-x-2">

@@ -1,7 +1,7 @@
 import React from "react";
 import InstructorHeader from "../components/Instructor/InstructorHeader";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/Footer";
+import Footer from "../components/ui/Footer";
 
 function InstructorLayout() {
   return (

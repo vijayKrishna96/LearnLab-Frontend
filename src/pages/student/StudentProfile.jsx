@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { useParams } from "react-router-dom";
+import { BiLogOutCircle } from "react-icons/bi";
+import { userLogout } from "../../services/userApi";
 
 function StudentProfile() {
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+
+  const {userId} = useParams();
+
+  console.log(userId)
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -14,13 +21,22 @@ function StudentProfile() {
     }
   };
 
+  const handleLogoout = async() => {
+    const response = await userLogout();
+    console.log(response)
+  }
+
   return (
     <div className="min-h-auto bg-gray-100 flex justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl w-full bg-white p-8 rounded-md shadow-md">
+        <div className="flex justify-between">
         <h2 className="text-3xl font-extrabold text-gray-900 mb-8">
           Profile & Settings
         </h2>
-
+        <label className=" flex items-center justify-center text-md gap-2 hover:text-red-700" 
+        onClick={handleLogoout}
+        >Logout <span className="text-2xl"> <BiLogOutCircle /></span> </label>
+        </div>
         <form>
           <div className="space-y-4">
             <div className="flex flex-col items-center m-14">

@@ -2,7 +2,7 @@ import React from 'react'
 
 function CoursePage() {
   return (
-    <div className="bg-gray-100 p-6 min-h-screen ">
+    <div className="bg-primary p-6 min-h-screen ">
       <div className="container mx-auto mt-10">
         {/* Header Section */}
         <div className="grid grid-cols-2 text-center mb-8">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { FaHeart } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
@@ -8,6 +8,9 @@ import { FaSortDown } from "react-icons/fa";
 
 function InstructorHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const Id  = useParams();
 
   let timer;
 
@@ -17,8 +20,16 @@ function InstructorHeader() {
   };
 
   const handleMouseLeave = () => {
-    timer = setTimeout(() => setDropdownOpen(false), 200); // 200ms delay before hiding
+    timer = setTimeout(() => setDropdownOpen(false), 200); 
   };
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleOpenDropdown = () =>{
+    setDropdownOpen(!dropdownOpen);
+  }
 
   useEffect(() => {
     return () => {
@@ -30,21 +41,21 @@ function InstructorHeader() {
       <nav className="shadow-md">
         <div className="container mx-auto flex justify-between items-center py-4 ">
           <ul className="navbar-links flex gap-11 items-center">
-            <li className="navbar-logo text-3xl text-[#00EACE]">
-              <Link to="/">
+            <li className="navbar-logo text-3xl text-primarybtn pl-4 md:pl-0">
+              <Link to={`/instructor/${Id.userId}`}>
                 <SiAlchemy />
               </Link>
             </li>
-            <li>
-              <Link to="/instructor">Home</Link>
+            <li className="hidden md:block">
+              <Link to={`/instructor/${Id.userId}`}>Home</Link>
             </li>
             <li
-              className="navbar-dropdown flex"
+              className="navbar-dropdown flex hidden md:block"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
               <div className="flex">
-                <Link to="/about">Courses</Link>
+                <Link to="">Courses</Link>
                 <span>
                   <FaSortDown />
                 </span>
@@ -54,10 +65,10 @@ function InstructorHeader() {
                   <ul className="dropdown-list">
                     {/* Course links */}
                     <li>
-                      <Link to="/category/development">Development</Link>
+                      <Link to="/category/development/:userId">Development</Link>
                     </li>
                     <li>
-                      <Link to="/category/business">Business</Link>
+                      <Link to="/category/business/:userId">Business</Link>
                     </li>
                     <li>
                       <Link to="/category/finance">Finance & Accounting</Link>
@@ -106,33 +117,30 @@ function InstructorHeader() {
                 </div>
               )}
             </li>
-            <li>
-              <Link to="/contact">About Us</Link>
+            <li className="hidden md:block">
+              <Link to={`/instructor/students/${Id.userId}`}>Students List</Link>
             </li>
-            <li>
-              <Link to="/contact">Contact</Link>
+            <li className="hidden md:block">
+              <Link to={`/instructor/mycourses/${Id.userId}`}>My Course </Link>
             </li>
-            <li>
-              <Link to="/contact">Students List</Link>
+            <li className="hidden md:block">
+              <Link to={`/instructor/aboutus/${Id.userId}`}>About Us</Link>
             </li>
-            <li>
-              <Link to="/instructor/addcourse">Add Course</Link>
-            </li>
-            <li>
-              <Link to="/contact">My Course </Link>
+            <li className="hidden md:block">
+              <Link to={`/instructor/contact/${Id.userId}`}>Contact</Link>
             </li>
           </ul>
-          <div className="Login flex gap-10 items-center">
-            <div className="text-2xl">
-              <Link to="/instructor/cart">
+          <div className="Login flex gap-5 md:gap-10 items-center">
+            <div className="text-xl md:text-2xl">
+              <Link to={`/instructor/cart/${Id.userId}`}>
                 <FaCartShopping />
               </Link>
             </div>
-            <div className="text-red-400 text-2xl">
+            <div className="text-red-400 text-xl md:text-2xl">
               <FaHeart />
             </div>
-            <div>
-              <Link to='/instructor/profile'>
+            <div className="hidden md:block">
+              <Link to={`/instructor/profile/${Id.userId}`}>
                 <img
                   className="h-10 w-10 rounded-full"
                   src="https://th.bing.com/th/id/OIP.ELavGv-PyFA24ucQcJthawHaNc?rs=1&pid=ImgDetMain"
@@ -140,8 +148,81 @@ function InstructorHeader() {
                 />
               </Link>
             </div>
+            <button className="md:hidden p-2" onClick={handleToggleSidebar}>
+              ☰ 
+            </button>
           </div>
         </div>
+        {isSidebarOpen && (
+          <div className="fixed top-0 right-0 w-64 h-full bg-white shadow-lg p-4 z-50">
+            <button
+              onClick={handleToggleSidebar}
+              className="text-xl absolute right-5"
+            >
+              X 
+            </button>
+            <ul className="flex flex-col mt-8 gap-10">
+              <li>
+                <Link onClick={handleToggleSidebar} to={`/instructor/${Id.userId}`}>
+                  Home
+                </Link>
+              </li>
+              <li
+              className="navbar-dropdown flex "
+              onClick={handleOpenDropdown}
+            >
+              <div className="flex">
+                <span>Courses</span>
+                <span>
+                  <FaSortDown />
+                </span>
+              </div>
+              {dropdownOpen && (
+                <div className="dropdown-menu">
+                  <ul className="dropdown-list">
+                    {/* Course links */}
+                    <li>
+                      <Link to="/category/development">Development</Link>
+                    </li>
+                    <li>
+                      <Link to="/category/business">Business</Link>
+                    </li>
+                    <li>
+                      <Link to="/category/development">Development</Link>
+                    </li>
+                    <li>
+                      <Link to="/category/business">Business</Link>
+                    </li>
+                    <li>
+                      <Link to="/category/development">Development</Link>
+                    </li>
+                    <li>
+                      <Link to="/category/business">Business</Link>
+                    </li>
+                    {/* Add more categories */}
+                  </ul>
+                </div>
+              )}
+            </li>
+            <li className="">
+              <Link onClick={handleToggleSidebar} to={`/instructor/students/${Id.userId}`}>Students List</Link>
+            </li>
+            <li className="">
+              <Link onClick={handleToggleSidebar} to={`/instructor/mycourses/${Id.userId}`}>My Course </Link>
+            </li>
+              <li>
+                <Link onClick={handleToggleSidebar} to={`/instructor/aboutus/${Id.userId}`}>
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link onClick={handleToggleSidebar} to={`/instructor/contact/${Id.userId}`}>
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
       </nav>
     </>
   );

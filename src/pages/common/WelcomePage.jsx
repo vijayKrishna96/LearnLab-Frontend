@@ -9,15 +9,15 @@ import { LuMonitorPlay } from "react-icons/lu";
 import { PiStudentFill } from "react-icons/pi";
 import { GiTeacher } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import Feedback from "../components/cards/Feedback";
-import Instructors from "../components/carousels/Instructors";
-import CourseCard from "../components/cards/CourseCard";
+import Feedback from "../../components/cards/Feedback";
+import Instructors from "../../components/carousels/Instructors";
+import CourseCard from "../../components/cards/CourseCard";
 
 function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="Hero bg-[#fddde6]">
+      <section className="Hero bg-[#F5F7F8]">
         <div className="pt-44 h-[94vh] container mx-auto ">
           <div className=" h-[60%] flex items-center justify-between p-36 bg-[#1c1c1e] text-white rounded-lg">
             <div className=" max-w-1/2">
@@ -79,21 +79,21 @@ function Home() {
             <hr className="custom-line w-20 h-2 rounded-lg mx-auto mt-2 bg-[#ed145b]" />
           </div>
           <div className="grid grid-cols-3 justify-center gap-52 mt-20 w-full">
-            <div className="flex gap-10 justify-center  bg-[#fddde6] p-14 rounded-lg">
+            <div className="flex gap-10 justify-center  bg-[#F5F7F8] p-14 rounded-custom-shape shadow-md">
               <LuMonitorPlay className="text-5xl bg-white rounded-full p-2" />
               <div>
                 <h3 className="text-2xl font-semibold">1200+</h3>
                 <p>SpecialCourse</p>
               </div>
             </div>
-            <div className="flex gap-10 justify-center  bg-[#fddde6] p-14 rounded-lg">
+            <div className="flex gap-10 justify-center  bg-[#F5F7F8] p-14 rounded-custom-shape shadow-md">
               <PiStudentFill className="text-5xl bg-white rounded-full p-2" />
               <div>
                 <h3 className="text-2xl font-semibold">12500+</h3>
                 <p>Enrolled Students</p>
               </div>
             </div>
-            <div className="flex gap-10 justify-center  bg-[#fddde6] p-14 rounded-lg">
+            <div className="flex gap-10 justify-center  bg-[#F5F7F8] p-14 rounded-custom-shape shadow-md">
               <GiTeacher className="text-5xl bg-white rounded-full p-2" />
               <div>
                 <h3 className="text-2xl font-semibold">300+</h3>
@@ -129,7 +129,7 @@ function Home() {
       </section>
 
       {/* Instructors */}
-      <section className="bg-[#fddde6] h-[80vh]">
+      <section className="bg-[#F5F7F8] h-[80vh]">
         <div className="pt-20 mt-10 container mx-auto">
           <div className="flex flex-col justify-center items-center">
             <h2 className="text-4xl font-semibold leading-tight">

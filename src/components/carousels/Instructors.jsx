@@ -98,7 +98,7 @@ function Instructors() {
       >
         {instructors.map((instructor, index) => (
           <SwiperSlide key={index} className="flex justify-center items-center mt-14">
-            <div className="h-[20rem] w-[16rem] relative overflow-hidden bg-violet-100 rounded-lg shadow-lg p-4 text-center transition-transform duration-400 transform hover:scale-110 mx-auto">
+            <div className="h-[20rem] w-[16rem] relative overflow-hidden bg-[#fff] rounded-lg shadow-xl p-4 text-center transition-transform duration-400 transform hover:scale-110 mx-auto">
               <div className="image cursor-pointer flex flex-col items-center justify-center overflow-hidden">
                 <img
                   className="rounded-full h-[10rem] mx-auto mb-4"

@@ -10,7 +10,7 @@ function Cart() {
         <div className="col-span-8  p-6">
           <div className="space-y-6">
             {/* Course 1 */}
-            <div className="flex items-center space-x-4 bg-gray-200 bg-opacity-50 rounded-md">
+            <div className="flex items-center space-x-4 bg-primary bg-opacity-50 rounded-md">
               <img src="https://th.bing.com/th/id/OIP.X8dbLHdWzNYmoWjRBSAtsgHaEK?w=294&h=180&c=7&r=0&o=5&pid=1.7" alt="Course" className="w-52 h-24 object-cover rounded-md" />
               <div className="flex-1">
                 <h3 className="text-lg font-semibold">Become a professional Full Stack Developer</h3>
@@ -20,7 +20,7 @@ function Cart() {
               <p className="text-lg font-semibold p-4">₹ 2,499</p>
             </div>
             {/* Course 2 */}
-            <div className="flex items-center space-x-4 bg-gray-200 bg-opacity-50 rounded-md">
+            <div className="flex items-center space-x-4 bg-primary bg-opacity-50 rounded-md">
               <img src="https://th.bing.com/th/id/OIP.X8dbLHdWzNYmoWjRBSAtsgHaEK?w=294&h=180&c=7&r=0&o=5&pid=1.7" alt="Course" className="w-52 h-24 object-cover rounded-md" />
               <div className="flex-1">
                 <h3 className="text-lg font-semibold">Become a Crypto Trader the Future is here</h3>
@@ -33,11 +33,11 @@ function Cart() {
         </div>
 
         {/* Checkout and Promotions */}
-        <div className="col-span-4 space-y-6 bg-red-100 bg-opacity-30 p-2 rounded-md">
+        <div className="col-span-4 space-y-6 bg-primary bg-opacity-30 p-2 rounded-md shadow-md">
           <div className="p-6 rounded-md ">
             <h3 className="text-lg font-semibold">Total:</h3>
             <p className="text-2xl font-bold">₹ 6,498</p>
-            <button className="bg-[#ed145b] text-white w-full py-2 mt-4 rounded-md">Checkout</button>
+            <button className="bg-primarybtn text-white w-full py-2 mt-4 rounded-md">Checkout</button>
           </div>
           <div className="p-6 rounded-md ">
             <h3 className="text-lg font-semibold">Promotions</h3>
@@ -47,7 +47,7 @@ function Cart() {
                 placeholder="Enter Coupon"
                 className="border border-gray-300 rounded-md p-2 flex-1"
               />
-              <button className="bg-[#ed145b] text-white px-4 rounded-md">Apply</button>
+              <button className="bg-primarybtn text-white px-4 rounded-md">Apply</button>
             </div>
           </div>
         </div>

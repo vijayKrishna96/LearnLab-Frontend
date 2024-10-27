@@ -14,8 +14,8 @@ function InstructorProfile() {
     }
   };
   return (
-    <div className="min-h-auto bg-gray-100 flex justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl w-full bg-white p-8 rounded-md shadow-md">
+    <div className="min-h-auto bg-primary flex justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl w-full bg-white p-8 rounded-md shadow-md">
         <h2 className="text-3xl font-extrabold text-gray-900 mb-8">
           Profile & Settings
         </h2>
@@ -113,7 +113,7 @@ function InstructorProfile() {
           <div className="mt-8">
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-md text-sm font-medium text-white bg-primarybtn hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Save
             </button>
