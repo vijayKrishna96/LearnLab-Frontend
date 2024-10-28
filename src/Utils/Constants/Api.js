@@ -15,6 +15,9 @@ const userDetailsEndpoint = import.meta.env.VITE_USER_DETAILS;
 //Category
 const AllCategoryEndpoint = import.meta.env.VITE_ALL_CATEGORY;
 
+//cart
+const cartApi = import.meta.env.VITE_CARTITEMS
+
 //Auth
 export const SIGNUP_API = BaseUrl + signupEndpoint;
 export const LOGIN_API = BaseUrl + loginEndpoint;
@@ -23,9 +26,12 @@ export const LOGOUT_API =BaseUrl + logoutEndpoint;
 //category
 export const ALL_CATEGORY_API = BaseUrl + AllCategoryEndpoint;
 
+
+
 //user
 export const USER_DETAILS_API = BaseUrl +userDetailsEndpoint;
 
 //allCourse
 export const  ALL_COURSE_API = BaseUrl + allCourseEndpoint
 export const  COURSE_BY_ID_API = BaseUrl + allCourseEndpoint
+export const BASE_URL_CART = BaseUrl+ cartApi

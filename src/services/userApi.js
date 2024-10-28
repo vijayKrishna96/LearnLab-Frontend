@@ -22,7 +22,7 @@ export const userLogout = async() =>{
       url: LOGOUT_API,
       method: "POST"
     })
-    return response?.data
+    return response
   }catch(error){
     console.log(error.message)
   }

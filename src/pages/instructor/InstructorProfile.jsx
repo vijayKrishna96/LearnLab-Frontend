@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { userLogout } from "../../services/userApi";
+import { BiLogOutCircle } from "react-icons/bi";
+import { LOGOUT_API } from "../../Utils/Constants/Api";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function InstructorProfile() {
-    const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -13,14 +20,52 @@ function InstructorProfile() {
       setImagePreview(URL.createObjectURL(file));
     }
   };
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(LOGOUT_API);
+      console.log(response);
+      if (response?.data?.success) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-auto bg-primary flex justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl w-full bg-white p-8 rounded-md shadow-md">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-8">
-          Profile & Settings
-        </h2>
-
-        <form>
+      {isLoading ? (
+        <div className="w-full h-screen flex items-center justify-center">
+          <div
+            className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      ) : (
+        <div className="max-w-4xl w-full bg-white p-8 rounded-md shadow-md">
+          <div className="flex justify-between">
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-8">
+              Profile & Settings
+            </h2>
+            <label
+              className="flex items-center justify-center text-md gap-2 hover:text-red-700"
+              onClick={handleLogout}
+            >
+              Logout
+              <span className="text-2xl">
+                
+                <BiLogOutCircle />
+              </span>
+            </label>
+          </div>
+          {/* Add other components or elements */}
+          <form>
           <div className="space-y-4">
             <div className="flex flex-col items-center m-14">
               <div className="relative">
@@ -77,8 +122,6 @@ function InstructorProfile() {
               </div>
             </div>
 
-           
-
             <div>
               <label
                 htmlFor="language"
@@ -99,14 +142,33 @@ function InstructorProfile() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 gap-6">
               <div>
-                <label htmlFor="website" className="block text-sm font-medium text-gray-700">Bio</label>
-                <input type="text" name="website" id="website" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <label
+                  htmlFor="website"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Bio
+                </label>
+                <input
+                  type="text"
+                  name="website"
+                  id="website"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
               </div>
               <div>
-                <label htmlFor="twitter" className="block text-sm font-medium text-gray-700">Expertise</label>
-                <input type="text" name="twitter" id="twitter" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <label
+                  htmlFor="twitter"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Expertise
+                </label>
+                <input
+                  type="text"
+                  name="twitter"
+                  id="twitter"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
               </div>
-              
             </div>
           </div>
 
@@ -119,9 +181,10 @@ function InstructorProfile() {
             </button>
           </div>
         </form>
-      </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default InstructorProfile
+export default InstructorProfile;

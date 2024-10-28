@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 
 function CourseCard({role, course}) {
 
-  console.log( course , "--<datas")
 
   return (
     <article className="flex flex-col items-center max-w-xs sm:max-w-sm lg:max-w-md bg-white shadow-lg rounded-lg overflow-hidden m-1">
-      <Link to={`${role}/coursepage/${course._id}`}>
+      <Link to={`${role}/coursepage/${course?._id}`}>
         <img
           className="h-[150px] sm:h-[180px] w-full object-fill"
           src={course?.image?.url}
