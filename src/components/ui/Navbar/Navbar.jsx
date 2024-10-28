@@ -4,6 +4,7 @@ import { SiAlchemy } from "react-icons/si";
 import { Link } from "react-router-dom";
 import Login from "../../../pages/common/Login";
 import Signup from "../../../pages/common/Signup";
+import DarkMode from "../DarkMode";
 
 function Navbar() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -68,6 +69,9 @@ function Navbar() {
             </li>
           </ul>
           <div className="flex gap-5">
+            <div className="flex items-center border-dashed border-2 border-red-600 rounded-full h-7">
+              <DarkMode />
+            </div>
             <button className="px-3 py-1" onClick={handleOpenSignUpModal}>
               Signup
             </button>

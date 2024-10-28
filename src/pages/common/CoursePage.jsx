@@ -1,130 +1,140 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { COURSE_BY_ID_API } from '../../Utils/Constants/Api';
+import { useParams } from 'react-router-dom';
 
 function CoursePage() {
+
+  const courseId = useParams()
+
+  // console.log(courseId.id)
+
+  const [error, setError] = useState(null);
+  const [courseData , setCourseData] = useState(null)
+
+  useEffect(() =>{
+    const fetchCourseData = async () => {
+      try{
+          const response = await axios.get(`${COURSE_BY_ID_API}/${courseId.id}`)
+          console.log(response?.data)
+          setCourseData(response?.data)
+      }catch(err){
+        console.error("Error fetching categories:", err.message);
+        setError("Failed to load categories");
+      }
+    }
+    fetchCourseData();
+  },[])
+
+  if (error) {
+    return <div className="text-center text-red-500 mt-4">{error}</div>;
+  }
+
   return (
-    <div className="bg-primary p-6 min-h-screen ">
+    // <div className="bg-primary p-6 min-h-screen ">
+    //   <div className="container mx-auto mt-10">
+    //     {/* Header Section */}
+    //     <div className="grid grid-cols-2 text-center mb-8">
+    //       <h1 className="text-4xl font-bold">{courseData?.title}</h1>
+    //       <p className="mt-4 text-gray-600  mx-auto">{courseData?.description}</p>
+    //     </div>
+
+    //     {/* Image Section */}
+    //     <div className="relative mb-12 ">
+    //       <img
+    //         src={courseData?.image?.url}
+    //         alt="UI/UX Design"
+    //         className="w-full h-[40vh] object-fill rounded-lg"
+    //       />
+    //     </div>
+
+    //     {/* Course Sections */}
+    //     <div className="grid grid-cols-12 gap-6">
+    //       {/* Introduction to UI/UX Design */}
+    //       <div className="col-span-6 md:col-span-4 bg-white p-6 rounded-lg shadow-md">
+    //         <h2 className="text-2xl font-bold">0 1</h2>
+    //         <h3 className="text-xl font-semibold mt-4">Introduction to UI/UX Design</h3>
+    //         <ul className="mt-4 space-y-3 text-gray-700">
+    //           <li>
+    //             <p className="font-medium">Understanding UI/UX Design Principles</p>
+    //             <p className="text-sm">Lesson 01 • 45 Minutes</p>
+    //           </li>
+    //           <li>
+    //             <p className="font-medium">Importance of User-Centered Design</p>
+    //             <p className="text-sm">Lesson 02 • 1 Hour</p>
+    //           </li>
+    //           <li>
+    //             <p className="font-medium">The Role of UI/UX Design in Product Development</p>
+    //             <p className="text-sm">Lesson 03 • 45 Minutes</p>
+    //           </li>
+    //         </ul>
+    //       </div>
+
+    //     </div>
+    //   </div>
+    // </div>
+    <div className="bg-primary p-6 min-h-screen">
       <div className="container mx-auto mt-10">
         {/* Header Section */}
-        <div className="grid grid-cols-2 text-center mb-8">
-          <h1 className="text-4xl font-bold">UI/UX Design Course</h1>
-          <p className="mt-4 text-gray-600  mx-auto">
-            Welcome to our UI/UX Design course! This comprehensive program will help you
-            master the principles, tools, and techniques of UI/UX design. We'll start
-            with an introduction to UI/UX, followed by user research and analysis,
-            wireframing and prototyping, visual design and branding, and finally,
-            usability testing. Below is an overview of the curriculum.
-          </p>
+        <div className="grid md:grid-cols-2 gap-6 text-center mb-8">
+          <h1 className="text-4xl font-bold">{courseData?.title}</h1>
+          <p className="mt-4 text-gray-600 mx-auto">{courseData?.description}</p>
         </div>
 
         {/* Image Section */}
         <div className="relative mb-12">
           <img
-            src="https://via.placeholder.com/1200x400"
-            alt="UI/UX Design"
-            className="w-full h-auto object-cover rounded-lg"
+            src={courseData?.image?.url}
+            alt={courseData?.title}
+            className="w-full h-[40vh] object-fill rounded-lg"
           />
+          <button className='absolute w-full h-full  right-0 top-0'>Buy Now</button>
         </div>
 
-        {/* Course Sections */}
-        <div className="grid grid-cols-12 gap-6">
-          {/* Introduction to UI/UX Design */}
-          <div className="col-span-6 md:col-span-4 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold">01</h2>
-            <h3 className="text-xl font-semibold mt-4">Introduction to UI/UX Design</h3>
-            <ul className="mt-4 space-y-3 text-gray-700">
-              <li>
-                <p className="font-medium">Understanding UI/UX Design Principles</p>
-                <p className="text-sm">Lesson 01 • 45 Minutes</p>
-              </li>
-              <li>
-                <p className="font-medium">Importance of User-Centered Design</p>
-                <p className="text-sm">Lesson 02 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">The Role of UI/UX Design in Product Development</p>
-                <p className="text-sm">Lesson 03 • 45 Minutes</p>
-              </li>
-            </ul>
-          </div>
+        {/* Course Modules */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {courseData?.modules?.map((module) => (
+            <div 
+              key={module._id}
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            >
+              <h2 className="text-2xl font-bold text-blue-600">
+                {module.moduleNumber.toString().padStart(2, '0')}
+              </h2>
+              <h3 className="text-xl font-semibold mt-4">{module?.title}</h3>
+              <ul className="mt-4 space-y-3 text-gray-700">
+                {module?.lessons.map((lesson, lessonIndex) => (
+                  <li key={lesson?._id || lessonIndex} className="hover:bg-gray-50 p-2 rounded">
+                    <p className="font-medium">{lesson?.title}</p>
+                    <p className="text-sm text-gray-500">
+                      Lesson {(lessonIndex + 1).toString().padStart(2, '0')} • {lesson?.duration || '45 Minutes'} Min
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
 
-          {/* User Research and Analysis */}
-          <div className="col-span-6 md:col-span-4 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold">02</h2>
-            <h3 className="text-xl font-semibold mt-4">User Research and Analysis</h3>
-            <ul className="mt-4 space-y-3 text-gray-700">
-              <li>
-                <p className="font-medium">Conducting User Research and Interviews</p>
-                <p className="text-sm">Lesson 01 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">Analyzing User Needs and Behavior</p>
-                <p className="text-sm">Lesson 02 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">Creating User Personas and Scenarios</p>
-                <p className="text-sm">Lesson 03 • 45 Minutes</p>
-              </li>
-            </ul>
-          </div>
-
-          {/* Wireframing and Prototyping */}
-          <div className="col-span-6 md:col-span-4 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold">03</h2>
-            <h3 className="text-xl font-semibold mt-4">Wireframing and Prototyping</h3>
-            <ul className="mt-4 space-y-3 text-gray-700">
-              <li>
-                <p className="font-medium">Introduction to Wireframing Tools and Techniques</p>
-                <p className="text-sm">Lesson 01 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">Creating Low-Fidelity Wireframes</p>
-                <p className="text-sm">Lesson 02 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">Prototyping and Interactive Mockups</p>
-                <p className="text-sm">Lesson 03 • 1 Hour</p>
-              </li>
-            </ul>
-          </div>
-
-          {/* Visual Design and Branding */}
-          <div className="col-span-6 md:col-span-4 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold">04</h2>
-            <h3 className="text-xl font-semibold mt-4">Visual Design and Branding</h3>
-            <ul className="mt-4 space-y-3 text-gray-700">
-              <li>
-                <p className="font-medium">Color Theory and Typography in UI Design</p>
-                <p className="text-sm">Lesson 01 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">Visual Hierarchy and Layout Design</p>
-                <p className="text-sm">Lesson 02 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">Creating a Strong Brand Identity</p>
-                <p className="text-sm">Lesson 03 • 45 Minutes</p>
-              </li>
-            </ul>
-          </div>
-
-          {/* Usability Testing and Iteration */}
-          <div className="col-span-6 md:col-span-4 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold">05</h2>
-            <h3 className="text-xl font-semibold mt-4">Usability Testing and Iteration</h3>
-            <ul className="mt-4 space-y-3 text-gray-700">
-              <li>
-                <p className="font-medium">Usability Testing Methods and Techniques</p>
-                <p className="text-sm">Lesson 01 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">Analyzing Usability Test Results</p>
-                <p className="text-sm">Lesson 02 • 1 Hour</p>
-              </li>
-              <li>
-                <p className="font-medium">Iterating and Improving UX Designs</p>
-                <p className="text-sm">Lesson 03 • 45 Minutes</p>
-              </li>
-            </ul>
+        {/* Course Info Footer */}
+        <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div>
+              <p className="text-gray-600">Price</p>
+              <p className="font-bold">₹{courseData?.price?.toLocaleString()}</p>
+            </div>
+            <div>
+              <p className="text-gray-600">Modules</p>
+              <p className="font-bold">{courseData?.modules?.length}</p>
+            </div>
+            <div>
+              <p className="text-gray-600">Rating</p>
+              <p className="font-bold">{courseData?.averageRating || 'No ratings yet'}</p>
+            </div>
+            <div>
+              <p className="text-gray-600">Reviews</p>
+              <p className="font-bold">{courseData?.reviews?.length}</p>
+            </div>
           </div>
         </div>
       </div>

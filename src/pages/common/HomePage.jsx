@@ -44,13 +44,12 @@ const HomePage = () => {
         // if (selectedCategory !== 'all') {
         //   url += `?category=${selectedCategory}`;
         // }
-        console.log(selectedCategory, "selected");
         url =
           selectedCategory === "all"
             ? url
             : `${url}?category=${selectedCategory}`;
         const response = await axios.get(url);
-        console.log(response, "cateww");
+        // console.log(response, "cateww");
         setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -67,7 +66,7 @@ const HomePage = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(`${USER_DETAILS_API}/${userId} `);
-        console.log("User details response:", response.data[0]);
+        // console.log("User details response:", response.data[0]);
         setUserData(response.data[0]);
         // Handle the response data as needed (e.g., set it in state)
       } catch (error) {
@@ -81,6 +80,7 @@ const HomePage = () => {
     }
   }, [userId]);
 
+  
   if (error) {
     return <div className="text-center text-red-500 mt-4">{error}</div>;
   }
@@ -184,7 +184,7 @@ const HomePage = () => {
                 {courses.length > 0 ? (
                   courses.map((course) => (
                     <CourseCard
-                      key={course.id}
+                      key={course._id}
                       course={course}
                       role={userRole}
                     />

@@ -5,12 +5,13 @@ import { FaHeart } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { SiAlchemy } from "react-icons/si";
 import { FaSortDown } from "react-icons/fa";
+import DarkMode from "../ui/DarkMode";
 
 function InstructorHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const Id  = useParams();
+  const Id = useParams();
 
   let timer;
 
@@ -20,16 +21,16 @@ function InstructorHeader() {
   };
 
   const handleMouseLeave = () => {
-    timer = setTimeout(() => setDropdownOpen(false), 200); 
+    timer = setTimeout(() => setDropdownOpen(false), 200);
   };
 
   const handleToggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleOpenDropdown = () =>{
+  const handleOpenDropdown = () => {
     setDropdownOpen(!dropdownOpen);
-  }
+  };
 
   useEffect(() => {
     return () => {
@@ -65,7 +66,9 @@ function InstructorHeader() {
                   <ul className="dropdown-list">
                     {/* Course links */}
                     <li>
-                      <Link to="/category/development/:userId">Development</Link>
+                      <Link to="/category/development/:userId">
+                        Development
+                      </Link>
                     </li>
                     <li>
                       <Link to="/category/business/:userId">Business</Link>
@@ -118,7 +121,9 @@ function InstructorHeader() {
               )}
             </li>
             <li className="hidden md:block">
-              <Link to={`/instructor/students/${Id.userId}`}>Students List</Link>
+              <Link to={`/instructor/students/${Id.userId}`}>
+                Students List
+              </Link>
             </li>
             <li className="hidden md:block">
               <Link to={`/instructor/mycourses/${Id.userId}`}>My Course </Link>
@@ -131,6 +136,9 @@ function InstructorHeader() {
             </li>
           </ul>
           <div className="Login flex gap-5 md:gap-10 items-center">
+            <div className="flex items-center border-dashed border-2 border-red-600 rounded-full h-7">
+              <DarkMode />
+            </div>
             <div className="text-xl md:text-2xl">
               <Link to={`/instructor/cart/${Id.userId}`}>
                 <FaCartShopping />
@@ -149,7 +157,7 @@ function InstructorHeader() {
               </Link>
             </div>
             <button className="md:hidden p-2" onClick={handleToggleSidebar}>
-              ☰ 
+              ☰
             </button>
           </div>
         </div>
@@ -159,64 +167,83 @@ function InstructorHeader() {
               onClick={handleToggleSidebar}
               className="text-xl absolute right-5"
             >
-              X 
+              X
             </button>
             <ul className="flex flex-col mt-8 gap-10">
               <li>
-                <Link onClick={handleToggleSidebar} to={`/instructor/${Id.userId}`}>
+                <Link
+                  onClick={handleToggleSidebar}
+                  to={`/instructor/${Id.userId}`}
+                >
                   Home
                 </Link>
               </li>
               <li
-              className="navbar-dropdown flex "
-              onClick={handleOpenDropdown}
-            >
-              <div className="flex">
-                <span>Courses</span>
-                <span>
-                  <FaSortDown />
-                </span>
-              </div>
-              {dropdownOpen && (
-                <div className="dropdown-menu">
-                  <ul className="dropdown-list">
-                    {/* Course links */}
-                    <li>
-                      <Link to="/category/development">Development</Link>
-                    </li>
-                    <li>
-                      <Link to="/category/business">Business</Link>
-                    </li>
-                    <li>
-                      <Link to="/category/development">Development</Link>
-                    </li>
-                    <li>
-                      <Link to="/category/business">Business</Link>
-                    </li>
-                    <li>
-                      <Link to="/category/development">Development</Link>
-                    </li>
-                    <li>
-                      <Link to="/category/business">Business</Link>
-                    </li>
-                    {/* Add more categories */}
-                  </ul>
+                className="navbar-dropdown flex "
+                onClick={handleOpenDropdown}
+              >
+                <div className="flex">
+                  <span>Courses</span>
+                  <span>
+                    <FaSortDown />
+                  </span>
                 </div>
-              )}
-            </li>
-            <li className="">
-              <Link onClick={handleToggleSidebar} to={`/instructor/students/${Id.userId}`}>Students List</Link>
-            </li>
-            <li className="">
-              <Link onClick={handleToggleSidebar} to={`/instructor/mycourses/${Id.userId}`}>My Course </Link>
-            </li>
+                {dropdownOpen && (
+                  <div className="dropdown-menu">
+                    <ul className="dropdown-list">
+                      {/* Course links */}
+                      <li>
+                        <Link to="/category/development">Development</Link>
+                      </li>
+                      <li>
+                        <Link to="/category/business">Business</Link>
+                      </li>
+                      <li>
+                        <Link to="/category/development">Development</Link>
+                      </li>
+                      <li>
+                        <Link to="/category/business">Business</Link>
+                      </li>
+                      <li>
+                        <Link to="/category/development">Development</Link>
+                      </li>
+                      <li>
+                        <Link to="/category/business">Business</Link>
+                      </li>
+                      {/* Add more categories */}
+                    </ul>
+                  </div>
+                )}
+              </li>
+              <li className="">
+                <Link
+                  onClick={handleToggleSidebar}
+                  to={`/instructor/students/${Id.userId}`}
+                >
+                  Students List
+                </Link>
+              </li>
+              <li className="">
+                <Link
+                  onClick={handleToggleSidebar}
+                  to={`/instructor/mycourses/${Id.userId}`}
+                >
+                  My Course{" "}
+                </Link>
+              </li>
               <li>
-                <Link onClick={handleToggleSidebar} to={`/instructor/aboutus/${Id.userId}`}>
+                <Link
+                  onClick={handleToggleSidebar}
+                  to={`/instructor/aboutus/${Id.userId}`}
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link onClick={handleToggleSidebar} to={`/instructor/contact/${Id.userId}`}>
+                <Link
+                  onClick={handleToggleSidebar}
+                  to={`/instructor/contact/${Id.userId}`}
+                >
                   Contact
                 </Link>
               </li>

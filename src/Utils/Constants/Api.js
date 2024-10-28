@@ -28,3 +28,4 @@ export const USER_DETAILS_API = BaseUrl +userDetailsEndpoint;
 
 //allCourse
 export const  ALL_COURSE_API = BaseUrl + allCourseEndpoint
+export const  COURSE_BY_ID_API = BaseUrl + allCourseEndpoint
