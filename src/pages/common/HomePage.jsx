@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "../../components/cards/CourseCard";
-import CourseCarousel from "../../components/carousels/CourseCarousel";
 import { useParams } from "react-router-dom";
 
 
@@ -10,17 +9,24 @@ import {
   ALL_COURSE_API,
   USER_DETAILS_API,
 } from "../../Utils/Constants/Api";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../features/userSlice";
+import InstructorCarousel from "../../components/carousels/InstructorCarousel";
+import { AppleCardsCarouselDemo } from "../../components/ui/apple-cards-carousel";
 
 
 const HomePage = () => {
 
-  const [userData, setUserData] = useState(null);
+  const [userData, setUsersData] = useState(null);
   const { userId } = useParams(); // Destructure userId from useParams
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categories, setCategories] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [instructors , setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -65,9 +71,9 @@ const HomePage = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`${USER_DETAILS_API}/${userId} `);
+        const response = await axios.get(`${USER_DETAILS_API}/user/${userId} `);
         // console.log("User details response:", response.data[0]);
-        setUserData(response.data[0]);
+        setUsersData(response.data[0]);
         // Handle the response data as needed (e.g., set it in state)
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -80,12 +86,26 @@ const HomePage = () => {
     }
   }, [userId]);
 
+  useEffect(()=>{
+    const getAllInstructors = async ()=>{
+      try{
+        const response = await axios.get(`${USER_DETAILS_API}/users`);
+        const filteredInstructors = response.data.users.filter(user => user.role === 'instructor');
+        setInstructors(filteredInstructors)
+      }catch(error){
+        console.log(error)
+      }
+    }
+    getAllInstructors();
+  },[])
   
   if (error) {
     return <div className="text-center text-red-500 mt-4">{error}</div>;
   }
-
+  console.log(userData , "data")
+  dispatch(setUserData(userData))
   const userRole = userData?.role;
+
 
   return (
     <>
@@ -96,7 +116,7 @@ const HomePage = () => {
           <div className="flex gap-6 mt-10 items-center px-4 xl:px-0 sm:px-20">
             <img
               className="h-12 w-12 rounded-full"
-              src="https://th.bing.com/th/id/OIP.ELavGv-PyFA24ucQcJthawHaNc?rs=1&pid=ImgDetMain"
+              src= {userData?.profilePicture?.url}
               alt=""
             />
             <div>
@@ -201,10 +221,10 @@ const HomePage = () => {
       </section>
 
       <section>
-        <div className="h-[40vh] container mx-auto mt-14">
+        <div className="lg:h-[85vh] container mx-auto mt-14">
           <h2 className="text-xl font-medium">Recomended For You</h2>
           <div>
-            <CourseCarousel />
+            <AppleCardsCarouselDemo instructor = {instructors} />
           </div>
         </div>
       </section>

@@ -15,6 +15,13 @@ import MyCourses from "../pages/instructor/MyCourses";
 import HomePage from "../pages/common/HomePage";
 import UserAuth from "./protectedRoutes/UserAuth";
 import AddCourse from "../pages/instructor/AddCourse";
+import LearningPage from "../pages/common/LearningPage";
+import { AppleCardsCarouselDemo } from "../components/ui/apple-cards-carousel";
+import AdminLayout from "../layouts/AdminLayout";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import Wishlist from "../pages/common/Wishlist";
+import InstructorView from "../pages/common/InstructorView";
+
 
 export const router = createBrowserRouter([
     {
@@ -32,7 +39,7 @@ export const router = createBrowserRouter([
         {
             path: '/contact',
             element: <ContactUs/>
-        }
+        },
       ]
     },
     {
@@ -53,16 +60,24 @@ export const router = createBrowserRouter([
             element:<StudentProfile/>
           },
           {
-              path: 'coursepage/:userId',
-              element: <CoursePage/>
+            path: ':userId/coursepage/:id',
+            element: <CoursePage/>
           },
           {
             path: 'cart/:userId',
-            element: <Cart/>
+            element: <Cart/>,
+          },
+          {
+            path: 'wishlist/:userId',
+            element: <Wishlist/>
           },
           {
             path: 'mylearnings/:userId',
             element: <MyLearnings/>
+          },
+          {
+            path: ":userId/learning/:id",
+            element: <LearningPage/>
           },
           {
             path: 'contact/:userId',
@@ -92,12 +107,16 @@ export const router = createBrowserRouter([
             element: <InstructorProfile/>
           },
           {
-            path: 'mycourses/addcourse/:userId',
+            path: ':userId/mycourse/:action/:id?',
             element: <AddCourse/>
           },
           {
             path: 'cart/:userId',
             element: <Cart/>
+          },
+          {
+            path: 'wishlist/:userId',
+            element: <Wishlist/>
           },
           {
             path: 'students/:userId',
@@ -108,8 +127,16 @@ export const router = createBrowserRouter([
             element: <MyCourses/>
           },
           {
-            path: ':userId/instructor/coursepage/:id',
+            path: ':userId/coursepage/:id',
             element: <CoursePage/>
+          },
+          {
+            path: ":userId/learning/:id",
+            element: <LearningPage/>
+          },
+          {
+            path: ":userId/instructorView/:id",
+            element : <InstructorView/>
           },
           {
             path: 'contact/:userId',
@@ -118,7 +145,22 @@ export const router = createBrowserRouter([
           {
             path: 'aboutus/:userId',
             element: <AboutUs/>
-          }
+          },
+          
         ]
+    },
+    {
+      path: 'admin',
+      element:(
+        <UserAuth role="admin">
+            <AdminLayout/>
+          </UserAuth>
+      ),
+      children:[
+        {
+          path: ':userId',
+          element: <AdminDashboard/>
+        }
+      ]
     }
   ]);

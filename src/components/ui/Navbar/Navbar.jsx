@@ -99,7 +99,7 @@ function Navbar() {
               <Link to="/student/profile">
                 <img
                   className="h-10 w-10 rounded-full"
-                  src="https://th.bing.com/th/id/OIP.ELavGv-PyFA24ucQcJthawHaNc?rs=1&pid=ImgDetMain"
+                  src="https://zultimate.com/wp-content/uploads/2019/12/default-profile-300x300.png"
                   alt=""
                 />
               </Link>

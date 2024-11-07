@@ -1,10 +1,9 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { IoCloseCircle } from "react-icons/io5";
-import { LOGIN_API } from "../../Utils/Constants/Api";
 import Loader from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../services/userApi";
+
 
 
 // eslint-disable-next-line react/prop-types
@@ -29,17 +28,20 @@ function Login({ isOpen, onClose }) {
       // Send the login data to the login route using axios
       const response = await userLogin(data); 
       setLoading(false);
-  
-      const userId = response.user.id; // Extract userId from the response
+      console.log(response.data.user.role)
+      const userId = response.data.user.id; // Extract userId from the response
 
-      if (response.user.role === 'student') {
+      if (response.data.user.role === 'student') {
         // Navigate to student route with userId
         navigate(`/student/${userId}`);
         onClose(); // Close the modal
-      } else if (response.user.role === 'instructor') {
+      } else if (response.data.user.role === 'instructor') {
         // Navigate to instructor route with userId
         navigate(`/instructor/${userId}`);
         onClose(); 
+      }else if (response.data.user.role === 'admin'){
+        navigate(`/admin/${userId}`);
+        onClose();
       }
     } catch (err) {
       setLoading(false);

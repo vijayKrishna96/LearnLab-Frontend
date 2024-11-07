@@ -14,3 +14,53 @@
     transition:  width none;
     text-decoration: none;
 }
+
+[data-theme="dark"] #Hero,
+[data-theme="dark"] #Instructorsui,
+[data-theme="dark"] #Tags,
+[data-theme="dark"] #Card {
+  background-color: #36393e;
+   /* Optional for text color */
+}
+
+[data-theme="dark"] #Text{
+    color: #E4E6EB;
+}
+[data-theme="dark"] #Popup{
+    color: white;
+    background-color: #F5F7F8;
+}
+[data-theme="dark"] #InputBg{
+    color: white;
+    background-color: #4b4e54;
+}
+[data-theme="dark"] #CartBg{
+    color: white;
+    background-color: #4b4e54;
+}
+[data-theme="dark"] #Switch{
+    color: #E4E6EB;
+    background-color: transparent;
+}
+[data-theme="dark"] #AboutContact{
+    background-color: #4b4e54;
+}
+
+[data-theme="light"] #AboutContact{
+    background-color: white;
+}
+[data-theme="light"] #AboutContact2{
+    background-color: #F5F7F8;
+}
+
+[data-theme="light"] #Hero,
+[data-theme="light"] #Instructorsui,
+[data-theme="light"] #Tags,
+[data-theme="light"] #Card {
+  background-color: #F5F7F8; /* Or any light mode color */
+  color: #000000; 
+}
+
+
+
+

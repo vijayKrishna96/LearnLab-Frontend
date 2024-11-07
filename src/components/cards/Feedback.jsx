@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 
 function Feedback() {
   return (
-    <article className="flex flex-col max-w-xl bg-white shadow-lg rounded-lg overflow-hidden h-[200px]">
+    <article className="flex flex-col max-w-xl bg-white shadow-lg rounded-lg overflow-hidden h-[200px]" id='Tags'>
       <div>
-        <p className="p-8 text-gray-700 h-[60%]">
+        <p className="p-8 text-gray-700 h-[60%]" id='Text'>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum,
           quibusdam.Lorem ipsum dolor sit amet consectetur, adipisicing elit.
           Illum, 6
@@ -17,7 +17,7 @@ function Feedback() {
             <img className="h-8 rounded-md" src="https://th.bing.com/th/id/OIP.Tv3oG-Is7dcMNcysxIVwLAHaHa?w=199&h=199&c=7&r=0&o=5&pid=1.7" alt="" />
             Some
         </div>
-        <div className="px-3 py-2 bg-secondarybtn rounded-md text-sm">
+        <div className="px-3 py-2 bg-secondarybtn rounded-md text-sm" id='Tags'>
             <Link>Read Full Story</Link>
         </div>
       </div>

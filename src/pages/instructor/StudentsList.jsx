@@ -1,187 +1,178 @@
-import React from "react";
-
-const students = [
-  {
-    id: 1,
-    name: "Angela Anderson",
-    phone: "170-433-8508",
-    email: "Sydnee.Bins@gmail.com",
-    balance: "-HK$250.00",
-    recurring: "No",
-    classes: "Steam | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 2,
-    name: "Chasity Miller",
-    phone: "626-255-3951",
-    email: "Shaniya56@yahoo.com",
-    balance: "HK$0.00",
-    recurring: "No",
-    classes: "Math | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 1,
-    name: "Angela Anderson",
-    phone: "170-433-8508",
-    email: "Sydnee.Bins@gmail.com",
-    balance: "-HK$250.00",
-    recurring: "No",
-    classes: "Steam | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 2,
-    name: "Chasity Miller",
-    phone: "626-255-3951",
-    email: "Shaniya56@yahoo.com",
-    balance: "HK$0.00",
-    recurring: "No",
-    classes: "Math | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 1,
-    name: "Angela Anderson",
-    phone: "170-433-8508",
-    email: "Sydnee.Bins@gmail.com",
-    balance: "-HK$250.00",
-    recurring: "No",
-    classes: "Steam | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 2,
-    name: "Chasity Miller",
-    phone: "626-255-3951",
-    email: "Shaniya56@yahoo.com",
-    balance: "HK$0.00",
-    recurring: "No",
-    classes: "Math | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 1,
-    name: "Angela Anderson",
-    phone: "170-433-8508",
-    email: "Sydnee.Bins@gmail.com",
-    balance: "-HK$250.00",
-    recurring: "No",
-    classes: "Steam | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 2,
-    name: "Chasity Miller",
-    phone: "626-255-3951",
-    email: "Shaniya56@yahoo.com",
-    balance: "HK$0.00",
-    recurring: "No",
-    classes: "Math | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 1,
-    name: "Angela Anderson",
-    phone: "170-433-8508",
-    email: "Sydnee.Bins@gmail.com",
-    balance: "-HK$250.00",
-    recurring: "No",
-    classes: "Steam | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 2,
-    name: "Chasity Miller",
-    phone: "626-255-3951",
-    email: "Shaniya56@yahoo.com",
-    balance: "HK$0.00",
-    recurring: "No",
-    classes: "Math | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 1,
-    name: "Angela Anderson",
-    phone: "170-433-8508",
-    email: "Sydnee.Bins@gmail.com",
-    balance: "-HK$250.00",
-    recurring: "No",
-    classes: "Steam | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 2,
-    name: "Chasity Miller",
-    phone: "626-255-3951",
-    email: "Shaniya56@yahoo.com",
-    balance: "HK$0.00",
-    recurring: "No",
-    classes: "Math | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 1,
-    name: "Angela Anderson",
-    phone: "170-433-8508",
-    email: "Sydnee.Bins@gmail.com",
-    balance: "-HK$250.00",
-    recurring: "No",
-    classes: "Steam | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  {
-    id: 2,
-    name: "Chasity Miller",
-    phone: "626-255-3951",
-    email: "Shaniya56@yahoo.com",
-    balance: "HK$0.00",
-    recurring: "No",
-    classes: "Math | MON,TUE,WED,THU,FRI,SAT | Regular",
-  },
-  // Add more students as needed
-];
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { USER_DETAILS_API } from "../../Utils/Constants/Api";
+import { useParams } from "react-router-dom";
 
 const StudentsList = () => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { userId } = useParams();
+
+  useEffect(() => {
+    const fetchStudentsList = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`${USER_DETAILS_API}/${userId}`);
+        setData(response?.data[0]);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStudentsList();
+  }, [userId]);
+
+  const { students } = data;
+
   return (
-    <div className="p-4 bg-primary rounded-lg shadow-lg container mx-auto my-10 h-[80vh]">
-      <div className="relative h-full overflow-y-auto">
-        <table className="w-full table-auto">
-          <thead className="sticky top-0 bg-primary">
-            <tr className="text-left">
-              <th className="p-4">#</th>
-              <th className="p-4">Name</th>
-              <th className="p-4">Balance</th>
-              <th className="p-4">Recurring Payment</th>
-              <th className="p-4">Classes</th>
-              <th className="p-4">Package</th>
-              <th className="p-4">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students.map((student) => (
-              <tr key={student.id} className="border-b">
-                <td className="p-4">{student.id}</td>
-                <td className="p-4">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                    <div>
-                      <p className="font-semibold">{student.name}</p>
-                      <p className="text-sm text-gray-500">{student.phone}</p>
-                      <p className="text-sm text-gray-500">{student.email}</p>
+    <div
+      className="p-4 bg-primary rounded-lg shadow-lg container mx-auto my-10 h-[80vh]"
+      id="Tags"
+    >
+      {isLoading ? (
+        <div className="w-full h-screen flex items-center justify-center text-xl">
+          <span className="loading loading-infinity loading-lg text-info"></span>
+        </div>
+      ) : (
+        <div className="relative h-full overflow-x-auto overflow-y-auto">
+          {/* Header for larger screens */}
+          <div className="hidden md:block">
+            <table className="w-full table-auto">
+              <thead className="sticky top-0 bg-primary" id="Tags">
+                <tr className="text-left" id="Text">
+                  <th className="p-2">#</th>
+                  <th className="p-2">Name</th>
+                  <th className="p-2">Email</th>
+                  <th className="p-2">Message</th>
+                  <th className="p-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students?.length > 0 ? (
+                  students.map((student, index) => (
+                    <tr key={student._id} className="border-b">
+                      <td className="p-2">{index + 1}</td>
+                      <td className="p-2">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-14 h-14 bg-gray-300 rounded-full overflow-hidden">
+                            {student.profilePicture ? (
+                              <img
+                                src={student.profilePicture}
+                                alt={student.name}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-gray-500">👤</span>
+                            )}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-sm sm:text-base">
+                              {student.name}
+                            </p>
+                            {student.phone && (
+                              <p className="text-xs sm:text-sm text-gray-500">
+                                {student.phone}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-2 text-sm sm:text-base">
+                        {student.email}
+                      </td>
+                      <td className="p-2">
+                        <button
+                          className="bg-gray-200 p-2 rounded-full"
+                          onClick={() =>
+                            console.log(`Send message to ${student.name}`)
+                          }
+                        >
+                          💬
+                        </button>
+                      </td>
+                      <td className="p-2">
+                        <button className="bg-blue-500 p-2 text-white rounded-full">
+                          📅
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="5"
+                      className="p-4 text-center text-gray-500 text-xl pt-32"
+                    >
+                      No data available
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Column-wise display for mobile screens */}
+          <div className="md:hidden space-y-4">
+            {students?.length > 0 ? (
+              students.map((student, index) => (
+                <div
+                  key={student._id}
+                  className="p-4 border rounded-lg shadow-lg bg-white"
+                >
+                  <div className="mb-2 text-gray-500 text-md">#{index + 1}</div>
+                  <div className="flex items-center mb-2 space-x-2">
+                    <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden">
+                      {student.profilePicture ? (
+                        <img
+                          src={student.profilePicture}
+                          alt={student.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-gray-500 flex  justify-center mt-3">👤</span>
+                      )}
+                    </div>
+                    <div className="flex flex-row gap-16">
+                      <div>
+                        <p className="font-semibold">{student.name}</p>
+                        {student.phone && (
+                          <p className="text-xs text-gray-500">
+                            {student.phone}
+                          </p>
+                        )}
+                      </div>
+                      <div className="">
+                        <p className="text-gray-700 font-medium">Email:</p>
+                        <p className="text-gray-500">{student.email}</p>
+                      </div>
                     </div>
                   </div>
-                </td>
-                <td
-                  className={`p-4 ${
-                    student.balance.startsWith("-")
-                      ? "text-red-500"
-                      : "text-gray-500"
-                  }`}
-                >
-                  {student.balance}
-                </td>
-                <td className="p-4">{student.recurring}</td>
-                <td className="p-4">{student.classes}</td>
-                <td className="p-4">{student.package}</td>
-                <td className="p-4">
-                  <button className="bg-blue-500 p-2 text-white rounded-full">
-                    📅
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
+                  <div className="flex space-x-4 mt-2">
+                    <button
+                      className="bg-gray-200 p-2 rounded-full"
+                      onClick={() =>
+                        console.log(`Send message to ${student.name}`)
+                      }
+                    >
+                      💬
+                    </button>
+                    <button className="bg-blue-500 p-2 text-white rounded-full">
+                      📅
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="p-4 text-center text-gray-500 text-xl pt-32">
+                No data available
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

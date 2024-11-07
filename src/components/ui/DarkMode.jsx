@@ -1,14 +1,28 @@
 import React, { useState } from "react";
 
 const DarkMode = () => {
+  const [isDarkMode, setDarkmode] = useState(false);
 
-    const [isDarkMode , setDarkmode] = useState(false);
+  document
+    .querySelector("html")
+    .setAttribute("data-theme", isDarkMode ? "dark" : "light");
 
-    document.querySelector("html").setAttribute('data-theme', isDarkMode ? 'dark': 'light');
+  // Set background color only if the Hero element exists
+  // const elements = document.querySelectorAll("#Hero, #Instructorsui , #Tags, #Card");
+  // elements.forEach((element) => {
+  //   element.style.backgroundColor = isDarkMode ? "#36393e" : ""; // Set light mode background color if needed
+  //   // element.style.color = isDarkMode ? "#fffff" : "";
+  // });
 
-    const toggleTheme = () => {
-        setDarkmode(!isDarkMode)
-    }
+  const instElement = document.getElementById("");
+  if (instElement) {
+    instElement.style.backgroundColor = isDarkMode ? "#121212" : "";
+  }
+  // document.getElementById("Instructorsui").style.backgroundColor = isDarkMode ? "#121212" : "";
+
+  const toggleTheme = () => {
+    setDarkmode(!isDarkMode);
+  };
 
   return (
     <label className="grid cursor-pointer place-items-center ">

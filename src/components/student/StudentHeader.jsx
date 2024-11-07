@@ -7,6 +7,8 @@ import { SiAlchemy } from "react-icons/si";
 import { FaSortDown } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import DarkMode from "../ui/DarkMode";
+import { useSelector } from "react-redux";
+import { selectWishlistItems } from "../../features/wishlistSlice";
 
 function StudentHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -16,14 +18,23 @@ function StudentHeader() {
 
   let timer;
 
-  const handleMouseEnter = () => {
-    clearTimeout(timer);
-    setDropdownOpen(true);
-  };
+  const item = useSelector((state) => state.cart.cartItems);
+  const filterItem = item?.filter((course) => course.userId === Id.userId)
 
-  const handleMouseLeave = () => {
-    timer = setTimeout(() => setDropdownOpen(false), 200);
-  };
+  const wishlistItems = useSelector(selectWishlistItems)
+  const filterWislist = wishlistItems?.filter((wlist)=> wlist.userId === Id.userId)
+  console.log(wishlistItems , "items")
+
+  const userData = useSelector((state) => state.user.userData);
+
+  // const handleMouseEnter = () => {
+  //   clearTimeout(timer);
+  //   setDropdownOpen(true);
+  // };
+
+  // const handleMouseLeave = () => {
+  //   timer = setTimeout(() => setDropdownOpen(false), 200);
+  // };
 
   const handleToggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -56,7 +67,7 @@ function StudentHeader() {
               <Link to={`/student/${Id.userId}`}>Home</Link>
             </li>
             {/* Courses Dropdown */}
-            <li
+            {/* <li
               className="navbar-dropdown flex hidden md:block"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -70,20 +81,20 @@ function StudentHeader() {
               {dropdownOpen && (
                 <div className="dropdown-menu">
                   <ul className="dropdown-list">
-                    {/* Course links */}
+                   
                     <li>
                       <Link to="/category/development">Development</Link>
                     </li>
                     <li>
                       <Link to="/category/business">Business</Link>
                     </li>
-                    {/* Add more categories */}
+                    
                   </ul>
                 </div>
               )}
-            </li>
+            </li> */}
 
-            {/* Additional links hidden on mobile */}
+            
             <li className="hidden md:block">
               <Link to={`/student/aboutus/${Id.userId}`}>About Us</Link>
             </li>
@@ -98,21 +109,25 @@ function StudentHeader() {
             <div className="border-dashed border-2 border-red-400 rounded-full">
               <DarkMode />
             </div>
-            <div className="text-2xl lg:text-md">
+            <div className="text-2xl lg:text-md relative">
               <Link to={`/student/cart/${Id.userId}`}>
                 <FaCartShopping className="text-xl md:text-2xl" />{" "}
               </Link>
+              <span className="absolute -top-2 -right-2 text-xs bg-primarybtn text-white rounded-full py-0.5 w-5 h-5 text-center justify-center">{filterItem?.length > 0 ? filterItem.length : 0}</span>
             </div>
-            <div className="text-red-400 text-xl md:text-2xl">
+            <div className="text-red-400 text-xl md:text-2xl relative">
+            <Link to={`/student/wishlist/${Id.userId}`}>
               <FaHeart />
+              </Link>
+              <span className="absolute -top-2 -right-2 text-xs bg-primarybtn text-white rounded-full py-0.5 w-5 h-5 text-center justify-center">{filterWislist?.length > 0 ? filterWislist.length : 0}</span>
             </div>
 
-            {/* Profile hidden on mobile */}
+            
             <div className="hidden md:block">
               <Link to={`/student/profile/${Id.userId}`}>
                 <img
                   className="h-10 w-10 rounded-full"
-                  src="https://th.bing.com/th/id/OIP.ELavGv-PyFA24ucQcJthawHaNc?rs=1&pid=ImgDetMain"
+                  src={userData?.profilePicture?.url}
                   alt="Profile"
                 />
               </Link>

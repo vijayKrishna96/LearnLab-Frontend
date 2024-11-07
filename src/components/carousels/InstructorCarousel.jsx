@@ -15,18 +15,19 @@ const swiperOptions = {
       spaceBetween: 10,
     },
     768: {
-      slidesPerView: 3,
+      slidesPerView: 2,
       spaceBetween: 60,
     },
     1024: {
-      slidesPerView: 4,
+      slidesPerView: 2,
     },
   },
   loop: false,
   spaceBetween: 10,
 };
 
-function CourseCarousel() {
+function InstructorCarousel() {
+  
   const instructors = [
     {
       name: "Skyler White",
@@ -139,4 +140,4 @@ function CourseCarousel() {
   );
 }
 
-export default CourseCarousel;
+export default InstructorCarousel;

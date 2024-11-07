@@ -2,29 +2,23 @@ import React from "react";
 
 function AboutUs() {
   return (
-    // <div>
-    //     <h1>Skills are the key to unlocking potential</h1>
-    //     <p>Whether you want to learn a new skill, train your
-    //         teams, or share what you know with the world,
-    //         you’re in the right place. As a leader in online learning,
-    //         we’re here to help you achieve your goals and transform your life.</p>
-    // </div>
-    <div className="bg-white font-sans">
+   
+    <div className=" font-sans" id="AboutContact">
       {/* About Us Section */}
-      <div className="bg-primary py-16 px-4 sm:px-6 lg:px-8">
+      <div className=" py-16 px-4 sm:px-6 lg:px-8" id="AboutContact2">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-left">OUR MISSION</h2>
-          <p className="mt-6 text-lg text-gray-700">
+          <p className="mt-6 text-lg text-gray-700" id="Text">
             At [Learn Lab], we’re passionate about empowering learners of all
             backgrounds and skill levels. Our mission is simple: to provide
             accessible, high-quality education that fosters growth, curiosity,
             and lifelong learning. Whether you’re a student, professional, or
             hobbyist, we’re here to support your journey.
           </p>
-          <p className="mt-6 text-lg font-semibold text-gray-800">
+          <p className="mt-6 text-lg font-semibold text-gray-800" id="Text">
             What Sets Us Apart
           </p>
-          <p className="mt-4 text-lg text-gray-700">
+          <p className="mt-4 text-lg text-gray-700" id="Text">
             1. Personalized Learning Paths: We understand that everyone learns
             differently. That’s why our dashboard adapts to your needs. Whether
             you’re diving into coding, exploring art history, or mastering a new
@@ -49,8 +43,8 @@ function AboutUs() {
       {/* Industries Section */}
       <div className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold text-left">Industries</h2>
-          <div className="mt-6 grid grid-cols-2 gap-4 text-lg text-gray-800">
+          <h2 className="text-2xl font-bold text-left" id="Text">Industries</h2>
+          <div className="mt-6 grid grid-cols-2 gap-4 text-lg text-gray-800" id="Text">
             <div className="space-y-2">
               <p>Health</p>
               <p>Insurance</p>

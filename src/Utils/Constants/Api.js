@@ -8,9 +8,12 @@ const logoutEndpoint = import.meta.env.VITE_LOGOUT_USER;
 
 //ALL Courses
 const allCourseEndpoint = import.meta.env.VITE_ALL_COURSE
+const allCourseByUserId = import.meta.env.VITE_GET_COURSEBY_USERID
 
-//userDetails
+//user
 const userDetailsEndpoint = import.meta.env.VITE_USER_DETAILS;
+const updateUserDetails = import.meta.env.VITE_UPDATE_USER
+const updateInstructor = import.meta.env.VITE_UPDATE_INSTRUCTOR
 
 //Category
 const AllCategoryEndpoint = import.meta.env.VITE_ALL_CATEGORY;
@@ -27,11 +30,15 @@ export const LOGOUT_API =BaseUrl + logoutEndpoint;
 export const ALL_CATEGORY_API = BaseUrl + AllCategoryEndpoint;
 
 
-
 //user
-export const USER_DETAILS_API = BaseUrl +userDetailsEndpoint;
+export const USER_DETAILS_API = BaseUrl + userDetailsEndpoint;
+export const UPDATE_USER_DETAILS = BaseUrl + updateUserDetails;
+export const UPDATE_INSTRUCTOR = BaseUrl + updateInstructor
 
-//allCourse
+//Course
 export const  ALL_COURSE_API = BaseUrl + allCourseEndpoint
 export const  COURSE_BY_ID_API = BaseUrl + allCourseEndpoint
-export const BASE_URL_CART = BaseUrl+ cartApi
+export const  BASE_URL_CART = BaseUrl + cartApi
+export const  ALL_COURSE_BY_USERID = BaseUrl + allCourseByUserId
+export const  UPDATE_COURSE_API = BaseUrl + allCourseEndpoint
+export const  ADD_NEW_COURSE = BaseUrl + ALL_COURSE_API

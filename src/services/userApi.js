@@ -2,18 +2,18 @@ import axios from "axios"
 import { LOGIN_API, LOGOUT_API, USER_DETAILS_API } from "../Utils/Constants/Api"
 import axiosInstance from "../Routes/config/axiosInstance";
 
-export const userLogin = async(data) => {
-    try{
-        const response = await axios({
-            url: LOGIN_API,
-            method: "POST",
-            data,
-            withCredentials: true,
-        })
-        return response?.data;
-    }catch(error){
-        console.log(error.message)
-    }
+export const userLogin = async (data) => {
+  try {
+      const response = await axios({
+          url: LOGIN_API,
+          method: "POST",
+          data,
+          withCredentials: true,
+      });
+      return response;
+  } catch (error) {
+    throw error.response || new Error(error.message);
+  }
 };
 
 export const userLogout = async() =>{
