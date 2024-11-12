@@ -11,7 +11,7 @@ import {
 } from "../../Utils/Constants/Api";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../features/userSlice";
-import InstructorCarousel from "../../components/carousels/InstructorCarousel";
+// import InstructorCarousel from "../../components/carousels/InstructorCarousel";
 import { AppleCardsCarouselDemo } from "../../components/ui/apple-cards-carousel";
 
 

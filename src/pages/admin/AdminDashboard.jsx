@@ -1,285 +1,123 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useEffect } from "react";
 import {
-  Calendar,
   Bell,
-  ChevronLeft,
   ChevronRight,
-  MoreVertical,
   BookOpen,
   FileText,
   InboxIcon,
   Layout,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
+import Students from "./Students";
+import InstructorListTable from "./Instructors";
+import ProductMetricsChart from "../../components/Instructor/Chart";
+import axios from "axios";
+import {
+  ALL_COURSE_API,
+  LOGOUT_API,
+  USER_DETAILS_API,
+} from "../../Utils/Constants/Api";
+import Courses from "./CourseDetails";
+import { useNavigate, useParams } from "react-router-dom";
+import DarkMode from "../../components/ui/DarkMode";
+import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useSelector } from "react-redux";
 
-const DashboardView = ({
-  courses,
-  tasks,
-  timeSpentData,
-  days,
-  selectedMonth,
-}) => (
-  <>
-    {/* Courses Grid */}
-    {/* <div className="mb-8">
-      <h2 className="text-xl font-bold mb-4">Courses</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {courses.map((course) => (
-          <div key={course.name} className="bg-white p-4 rounded-lg shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center space-x-3">
-                <span className="text-2xl">{course.icon}</span>
-                <span className="font-medium">{course.name}</span>
-              </div>
-              <ChevronRight className="w-5 h-5 text-gray-400" />
-            </div>
-            <div className="relative pt-1">
-              <div className="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-                <div
-                  style={{ width: `${course.progress}%` }}
-                  className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${course.color}`}
-                ></div>
-              </div>
-              <span className="text-sm text-gray-500 mt-1">{course.progress}%</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div> */}
+const DashboardView = () => {
+  const [value, setValue] = useState(dayjs());
 
-    {/* Statistics Section */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Time Spent Chart */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h3 className="font-bold text-lg">Time Spent</h3>
-            <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold">56h</span>
-              <span className="text-green-500 text-sm">9%↑</span>
-            </div>
-          </div>
-          <select className="border rounded-lg px-3 py-1">
-            <option>Last Week</option>
-          </select>
-        </div>
+  const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
 
-        <div className="flex items-end space-x-2 h-48">
-          {timeSpentData.map((hours, index) => (
-            <div key={index} className="flex-1 flex flex-col items-center">
-              <div
-                className="w-full bg-blue-500 rounded-t"
-                style={{ height: `${(hours / 16) * 100}%` }}
-              ></div>
-              <span className="mt-2 text-sm text-gray-600">{days[index]}</span>
-            </div>
-          ))}
+  return (
+    <>
+      {/* Statistics Section */}
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+        <div className="p-6 rounded-lg shadow content">
+          <ProductMetricsChart />
         </div>
       </div>
 
-      {/* Progress Circle */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="font-bold text-lg mb-6">Progress</h3>
-        <div className="flex items-center justify-center">
-          <div className="relative w-48 h-48">
-            <svg className="w-full h-full" viewBox="0 0 36 36">
-              <path
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke="#eee"
-                strokeWidth="3"
+      <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 gap-10">
+        {/* Progress Circle */}
+        <div className="p-6 rounded-lg shadow content">
+          <h3 className="font-bold text-lg mb-6">Progress</h3>
+          <div className="flex items-center justify-center">
+            <div className="relative w-56 h-56">
+              <svg className="w-full h-full" viewBox="0 0 36 36">
+                <path
+                  d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#eee"
+                  strokeWidth="3"
+                />
+                <path
+                  d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#4F46E5"
+                  strokeWidth="3"
+                  strokeDasharray="10, 100"
+                />
+              </svg>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                <span className="text-2xl font-bold">30%</span>
+                <p className="text-sm text-gray-500">SALES PROGRESS</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Calendar and Tasks */}
+        <div className="p-6 rounded-lg shadow content">
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoItem label="Controlled calendar">
+              <DateCalendar
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+                sx={{
+                  width: "100%",
+                  bgcolor: isDarkMode ? "#333" : "#fff",
+                  color: isDarkMode ? "#fff" : "#000",
+                  borderRadius: "8px",
+                  boxShadow: isDarkMode
+                    ? "0px 4px 10px rgba(0, 0, 0, 0.3)"
+                    : "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  ".MuiPickersCalendarHeader-label": {
+                    color: isDarkMode ? "#fff" : "#000", // Month text color
+                  },
+                  ".MuiPickersCalendarHeader-switchViewButton, .MuiPickersArrowSwitcher-button":
+                    {
+                      color: isDarkMode ? "#fff" : "#000", // Nav arrows color
+                    },
+                  ".MuiPickersDay-root": {
+                    color: isDarkMode ? "#fff" : "#000",
+                  },
+                  ".MuiPickersDay-root.Mui-selected": {
+                    bgcolor: isDarkMode ? "#1976d2" : "#4F46E5",
+                  },
+                  ".MuiPickersDay-root:hover": {
+                    bgcolor: isDarkMode ? "#555" : "#ddd",
+                  },
+                  ".MuiDayCalendar-weekDayLabel": {
+                    color: isDarkMode ? "#fff" : "#000", // Day label color (S M T W T F S)
+                  },
+                }}
               />
-              <path
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke="#4F46E5"
-                strokeWidth="3"
-                strokeDasharray="10, 100"
-              />
-            </svg>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-              <span className="text-2xl font-bold">10%</span>
-              <p className="text-sm text-gray-500">COMPLETED</p>
-            </div>
-          </div>
+            </DemoItem>
+          </LocalizationProvider>
         </div>
       </div>
-    </div>
-
-    {/* Calendar and Tasks */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-      <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Calendar</h2>
-          <div className="flex items-center space-x-4">
-            <button>
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <span className="font-medium">{selectedMonth}</span>
-            <button>
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white p-6 rounded-lg shadow">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Tasks</h2>
-          <button className="w-8 h-8 bg-blue-600 rounded-full text-white flex items-center justify-center">
-            +
-          </button>
-        </div>
-        <div className="space-y-4">
-          {tasks.map((task, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-            >
-              <div>
-                <p className="text-sm text-gray-500">{task.date}</p>
-                <div className="flex items-center space-x-2">
-                  <span
-                    className={`w-8 h-8 ${task.color} rounded-lg flex items-center justify-center`}
-                  >
-                    {task.icon}
-                  </span>
-                  <span className="font-medium">{task.title}</span>
-                </div>
-              </div>
-              <button>
-                <MoreVertical className="w-5 h-5 text-gray-400" />
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </>
-);
-
-// My Courses View Component
-const MyCoursesView = ({ courses }) => (
-  <div className="p-8">
-    <h1 className="text-2xl font-bold mb-6">My Courses</h1>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {courses.map((course) => (
-        <div key={course.name} className="bg-white p-6 rounded-lg shadow-lg">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-4">
-              <span
-                className={`w-12 h-12 ${course.color} rounded-lg flex items-center justify-center text-2xl`}
-              >
-                {course.icon}
-              </span>
-              <div>
-                <h3 className="font-bold text-lg">{course.name}</h3>
-                <p className="text-gray-500">12 Chapters</p>
-              </div>
-            </div>
-          </div>
-          <div className="space-y-4">
-            <div className="flex justify-between text-sm">
-              <span>Progress</span>
-              <span>{course.progress}%</span>
-            </div>
-            <div className="relative pt-1">
-              <div className="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-                <div
-                  style={{ width: `${course.progress}%` }}
-                  className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${course.color}`}
-                ></div>
-              </div>
-            </div>
-            <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-              Continue Learning
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-// Mock Test View Component
-const MockTestView = () => (
-  <div className="p-8">
-    <h1 className="text-2xl font-bold mb-6">All Courses</h1>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {["Business", "Development", "Music", "Design"].map((subject) => (
-        <div key={subject} className="bg-white p-6 rounded-lg shadow-lg">
-          <img src="../src/assets/Webdev.png" alt="" className="rounded-t-md" />
-          <h3 className="font-bold text-lg my-4">{subject} </h3>
-          <div className="space-y-4 ">
-            <div className="grid grid-cols-2 space-x-4 gap-4">
-              <div className="flex justify-between text-sm text-gray-600 ml-4">
-                <span>Duration</span>
-                <span>3 hours</span>
-              </div>
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>Modules</span>
-                <span>100</span>
-              </div>
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>Lessons</span>
-                <span>100</span>
-              </div>
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>Instructor</span>
-                <span>Name</span>
-              </div>
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>Rating</span>
-                <span>5</span>
-              </div>
-            </div>
-            <button className="w-full mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
-              View More Details
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-// Notes View Component
-const NotesView = () => (
-  <div className="p-8">
-    <h1 className="text-2xl font-bold mb-6">My Notes</h1>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[
-        "Physics Notes",
-        "Chemistry Notes",
-        "Mathematics Notes",
-        "English Notes",
-      ].map((note) => (
-        <div key={note} className="bg-white p-6 rounded-lg shadow-lg">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold text-lg">{note}</h3>
-            <button className="text-blue-600 hover:text-blue-800">
-              <FileText className="w-5 h-5" />
-            </button>
-          </div>
-          <p className="text-gray-600 text-sm mb-4">Last updated: 2 days ago</p>
-          <div className="flex space-x-2">
-            <button className="bg-blue-100 text-blue-600 px-3 py-1 rounded-lg text-sm">
-              View
-            </button>
-            <button className="bg-green-100 text-green-600 px-3 py-1 rounded-lg text-sm">
-              Download
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
+    </>
+  );
+};
 
 // Inbox View Component
 const InboxView = () => (
@@ -323,35 +161,31 @@ const InboxView = () => (
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [selectedMonth, setSelectedMonth] = useState("Jun 2020");
+  const [courseData, setCourseData] = useState([]);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [userData, setUsersData] = useState(null);
+  const [newProfilePicture, setNewProfilePicture] = useState(null);
+  const [fileInputKey, setFileInputKey] = useState(Date.now()); // Key to reset input field
+  const [isImageSelected, setIsImageSelected] = useState(false);
 
-  const courses = [
-    { name: "Physics", progress: 40, icon: "⚛️", color: "bg-orange-500" },
-    { name: "English", progress: 76, icon: "📚", color: "bg-yellow-400" },
-    { name: "Mathematics", progress: 92, icon: "➗", color: "bg-teal-500" },
-    { name: "Chemistry", progress: 100, icon: "🧪", color: "bg-blue-500" },
-    { name: "Aptitude Test", progress: 34, icon: "💡", color: "bg-pink-500" },
-  ];
+  // Function to handle profile picture file selection
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewProfilePicture(reader.result); // Set the new profile picture to preview
+        setIsImageSelected(true); // Set the image selected flag to true
+      };
+      reader.readAsDataURL(file); // Read the file as a Data URL
+    }
+  };
 
-  const tasks = [
-    {
-      date: "June 29, 2020",
-      title: "Chapters 5, 6, 7",
-      icon: "📚",
-      color: "bg-yellow-400",
-    },
-    {
-      date: "June 29, 2020",
-      title: "Chapters 10 and 14",
-      icon: "➗",
-      color: "bg-teal-500",
-    },
-    {
-      date: "June 30, 2020",
-      title: "Isometric Drawing Practice",
-      icon: "💡",
-      color: "bg-pink-500",
-    },
-  ];
+  // Reset file input field after picture update
+  const handleUpdateProfilePicture = () => {
+    setIsImageSelected(false);
+    setFileInputKey(Date.now()); // Change the input key to reset it
+  };
 
   const navItems = [
     { name: "Dashboard", icon: Layout },
@@ -364,33 +198,71 @@ const AdminDashboard = () => {
   const timeSpentData = [8, 16, 6, 9, 8, 9, 3];
   const days = ["S", "M", "T", "W", "T", "F", "S"];
 
+  const navigate = useNavigate();
+  const { userId } = useParams();
+
+  console.log(userData, "data");
+
+  useEffect(() => {
+    const GetAllCourses = async () => {
+      try {
+        const response = await axios.get(ALL_COURSE_API);
+        console.log(response);
+        setCourseData(response?.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    GetAllCourses();
+  }, []);
+
+  console.log(courseData)
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(`${USER_DETAILS_API}/user/${userId} `);
+        // console.log("User details response:", response.data[0]);
+        setUsersData(response?.data[0]);
+        // Handle the response data as needed (e.g., set it in state)
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+        // Handle the error (e.g., show an error message)
+      }
+    };
+
+    if (userId) {
+      fetchUserDetails(); // Call the async function if userId is available
+    }
+  }, [userId]);
+
+  console.log(userData, "data");
+
   const renderView = () => {
     switch (activeTab) {
       case "Dashboard":
         return (
           <DashboardView
-            courses={courses}
-            tasks={tasks}
+            // courses={courses}
+            // tasks={tasks}
             timeSpentData={timeSpentData}
             days={days}
             selectedMonth={selectedMonth}
           />
         );
-      case "My Courses":
-        return <MyCoursesView courses={courses} />;
+      // case "My Courses":
+      //   return <MyCoursesView courses={courses} />;
       case "Courses":
-        return <MockTestView />;
+        return <Courses courses={courseData} />;
       case "Students":
-        return <NotesView />;
+        return <Students />;
       case "Instructors":
-        return <InboxView />;
+        return <InstructorListTable />;
       case "Inbox":
         return <InboxView />;
       default:
         return (
           <DashboardView
-            courses={courses}
-            tasks={tasks}
             timeSpentData={timeSpentData}
             days={days}
             selectedMonth={selectedMonth}
@@ -399,10 +271,22 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleLogout = async () => {
+    // setIsLoading(true);
+    try {
+      const response = await axios.post(LOGOUT_API);
+      if (response?.data?.success) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-white shadow-lg">
+    <div className="flex h-screen overflow-y-hidden">
+      {/* Main Sidebar */}
+      <div className="w-64 shadow-lg sidebar">
         <div className="p-6">
           <h1 className="text-2xl font-bold text-blue-600">LearnLab</h1>
         </div>
@@ -411,10 +295,8 @@ const AdminDashboard = () => {
             <button
               key={item.name}
               onClick={() => setActiveTab(item.name)}
-              className={`w-full flex items-center space-x-4 px-6 py-3 hover:bg-blue-50 ${
-                activeTab === item.name
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-gray-600"
+              className={`w-full flex items-center space-x-4 px-6 py-3  sidebarText ${
+                activeTab === item.name ? " sidebarTextActive" : ""
               }`}
             >
               <item.icon className="w-5 h-5" />
@@ -427,23 +309,106 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
         {/* Header */}
-        <header className="bg-white shadow-sm">
+        <header className="shadow-sm AdminHeader">
           <div className="flex items-center justify-between px-8 py-4">
             <h1 className="text-2xl font-bold">{activeTab}</h1>
             <div className="flex items-center space-x-4">
+              <div className="border-dashed border-2 border-red-400 rounded-full">
+                <DarkMode />
+              </div>
+
               <button className="p-2 hover:bg-gray-100 rounded-full">
                 <Bell className="w-5 h-5 text-gray-600" />
               </button>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-full"></div>
-                <span className="font-medium">John Doe</span>
+              <div className="relative">
+                <button
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="flex items-center space-x-2 focus:outline-none"
+                >
+                  <img
+                    src={
+                      newProfilePicture || userData?.profilePicture?.url || ""
+                    }
+                    alt="Profile"
+                    className="w-8 h-8 bg-blue-600 rounded-full"
+                  />
+                  <span className="font-medium">{userData?.name}</span>
+                </button>
+
+                {/* Profile Sidebar */}
+                {isProfileOpen && (
+                  <div className="absolute right-0 mt-2 w-64  rounded-lg shadow-lg py-2 z-10 profile">
+                    {/* Profile Info Section */}
+                    <div className="px-4 py-4 border-b text-center">
+                      <img
+                        src={
+                          newProfilePicture ||
+                          userData?.profilePicture?.url ||
+                          ""
+                        }
+                        alt="Profile"
+                        className="w-16 h-16 mx-auto rounded-full border border-gray-200"
+                      />
+                      <p className="font-medium mt-2 Text">{userData?.name}</p>
+                      <p className="text-sm text-gray-600 Text">{userData?.email}</p>
+                    </div>
+
+                    {/* Profile Actions */}
+                    <div className="px-4 py-2">
+                      <input
+                        key={fileInputKey} // Reset input when the key changes
+                        type="file"
+                        accept="image/*"
+                        className="w-full hidden"
+                        onChange={handleProfilePictureChange}
+                        id="fileInput"
+                      />
+                      {!isImageSelected && (
+                        <button
+                          onClick={() =>
+                            document.getElementById("fileInput").click()
+                          }
+                          className="w-full px-4 py-2 text-blue-600 hover:bg-blue-50 text-center"
+                        >
+                          Choose New Picture
+                        </button>
+                      )}
+
+                      {/* Display Update or Choose option based on image selection */}
+                      {isImageSelected && (
+                        <div className="mt-4 space-y-2">
+                          <button
+                            onClick={handleUpdateProfilePicture}
+                            className="w-full px-4 py-2 text-green-600 hover:bg-green-50"
+                          >
+                            Update Profile Picture
+                          </button>
+                          <button
+                            onClick={() => setIsImageSelected(false)}
+                            className="w-full px-4 py-2 text-blue-600 hover:bg-blue-50"
+                          >
+                            Choose Another Picture
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </header>
 
         {/* Content Area */}
-        <main className="p-8">{renderView()}</main>
+        <main className="p-8 ">{renderView()}</main>
       </div>
     </div>
   );

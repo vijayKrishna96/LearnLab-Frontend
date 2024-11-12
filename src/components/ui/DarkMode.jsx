@@ -1,36 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleDarkMode } from "../../features/darkModeSlice";
+
+ // Adjust the import path as needed
 
 const DarkMode = () => {
-  const [isDarkMode, setDarkmode] = useState(false);
+  const dispatch = useDispatch();
+  const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
 
-  document
-    .querySelector("html")
-    .setAttribute("data-theme", isDarkMode ? "dark" : "light");
+  // Effect to update HTML theme whenever isDarkMode changes
+  useEffect(() => {
+    document.querySelector("html").setAttribute("data-theme", isDarkMode ? "dark" : "light");
 
-  // Set background color only if the Hero element exists
-  // const elements = document.querySelectorAll("#Hero, #Instructorsui , #Tags, #Card");
-  // elements.forEach((element) => {
-  //   element.style.backgroundColor = isDarkMode ? "#36393e" : ""; // Set light mode background color if needed
-  //   // element.style.color = isDarkMode ? "#fffff" : "";
-  // });
-
-  const instElement = document.getElementById("");
-  if (instElement) {
-    instElement.style.backgroundColor = isDarkMode ? "#121212" : "";
-  }
-  // document.getElementById("Instructorsui").style.backgroundColor = isDarkMode ? "#121212" : "";
+    const instElement = document.getElementById("");
+    if (instElement) {
+      instElement.style.backgroundColor = isDarkMode ? "#121212" : "";
+    }
+  }, [isDarkMode]);
 
   const toggleTheme = () => {
-    setDarkmode(!isDarkMode);
+    dispatch(toggleDarkMode());
   };
 
   return (
-    <label className="grid cursor-pointer place-items-center ">
+    <label className="grid cursor-pointer place-items-center">
       <input
         type="checkbox"
         value="synthwave"
-        className="toggle theme-controller bg-base-content col-span-2 col-start-1 row-start-1 "
-        onClick={toggleTheme}
+        className="toggle theme-controller bg-base-content col-span-2 col-start-1 row-start-1"
+        checked={isDarkMode}
+        onChange={toggleTheme}
       />
       <svg
         className="stroke-base-100 fill-base-100 col-start-1 row-start-1"

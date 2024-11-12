@@ -34,7 +34,7 @@ const InstructorView = () => {
             try{
                 const response = await axios.get(`${USER_DETAILS_API}/${Id.id}`)
                 console.log(response , "I")
-                setInstructorData(response.data[0])
+                setInstructorData(response?.data.users[0])
             }catch(error){
                 console.log(error)
             }
@@ -52,22 +52,22 @@ const InstructorView = () => {
     <div className="flex items-start">
       <img src={instructorData?.profilePicture?.url}  className="w-32 h-32 rounded-full mr-8" />
       <div>
-        <h1 className="text-4xl font-bold mb-2">{instructorData.name}</h1>
-        <p>{instructorData.headline}</p>
+        <h1 className="text-4xl font-bold mb-2">{instructorData?.name}</h1>
+        <p>{instructorData?.headline}</p>
         <div className="flex items-center mb-4">
           {/* <Ratin value={rating} className="mr-2" /> */}
-          <span className="text-gray-500">{instructorData.rating}</span>
+          <span className="text-gray-500">{instructorData?.rating}</span>
         </div>
-        <p className="text-gray-700 mb-8">{instructorData.bio}</p>
+        <p className="text-gray-700 mb-8">{instructorData?.bio}</p>
       </div>
     </div>
 
     <h2 className="text-2xl font-bold mb-6">Courses</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-    {courseData.length === 0 ? (
+    {courseData?.length === 0 ? (
         <div className="text-center text-gray-500 py-8">No courses yet</div>
       ) : (
-        courseData.map((course) => (
+        courseData?.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))
       )}

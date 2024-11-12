@@ -7,12 +7,11 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import {
   UPDATE_COURSE_API,
-  UPDATE_INSTRUCTOR,
   UPDATE_USER_DETAILS,
 } from "../../Utils/Constants/Api";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addUserCourse, selectUserCourses } from "../../features/userSlice";
-import { tr } from "framer-motion/client";
+
 
 function Cart() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +26,9 @@ function Cart() {
 
   const userRole = useSelector((state) => state.user.userData.role);
 
-  console.log(userRole , userId)
+  console.log(userRole, "role")
+
+  console.log(userCourses , "courses")
 
   const filteredItems = cartItems
     ?.filter((course) => course.userId === userId)
@@ -164,7 +165,7 @@ function Cart() {
                         id="Tags"
                       >
                         <img
-                          src={course.image.url}
+                          src={course?.image?.url || "path/to/placeholder-image.jpg"}
                           alt={course.title}
                           className="w-52 h-24 object-cover rounded-md"
                         />

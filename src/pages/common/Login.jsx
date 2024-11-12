@@ -3,59 +3,76 @@ import { IoCloseCircle } from "react-icons/io5";
 import Loader from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../services/userApi";
-
-
+import { toast } from "react-toastify";
 
 // eslint-disable-next-line react/prop-types
 function Login({ isOpen, onClose }) {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading , setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
     setLoading(true);
-  
+
     const data = {
       email: email,
       password: password,
     };
-  
+
+   
+    // try {
+    //   const response = await userLogin(data);
+    //   console.log(response)
+    //   if (response.status === 200) {
+    //     // Login was successful, handle the response as needed
+    //     console.log(response.data.message); // Success message
+    //   } else {
+    //     console.error(response.data.message || "An error occurred");
+    //   }
+    // } catch (error) {
+    //   console.error(error.message || "An unknown error occurred");
+    // } finally {
+    //   setLoading(false);
+    // }
+
     try {
       // Send the login data to the login route using axios
-      const response = await userLogin(data); 
-      setLoading(false);
-      console.log(response.data.user.role)
+      const response = await userLogin(data);
+      // setLoading(false);
+      console.log(response.data.message)
       const userId = response.data.user.id; // Extract userId from the response
 
       if (response.data.user.role === 'student') {
         // Navigate to student route with userId
         navigate(`/student/${userId}`);
         onClose(); // Close the modal
+        
       } else if (response.data.user.role === 'instructor') {
         // Navigate to instructor route with userId
         navigate(`/instructor/${userId}`);
-        onClose(); 
+        onClose();
       }else if (response.data.user.role === 'admin'){
         navigate(`/admin/${userId}`);
         onClose();
       }
     } catch (err) {
-      setLoading(false);
       // Handle error cases
+      console.log(err.response)
       if (err.response?.data?.message === 'User not found') {
-        alert('User not found, please check the User ID.');
-      } else if (err.response?.data?.message === 'Invalid password') {
-        alert('Invalid password, please try again.');
+        toast.error("User not Found, Check the UserID !")
+      } else if (err.response?.data?.message === "Invalid password") {
+        toast.error("Invalid password, please try again !")
       } else if (err.response?.data?.message === 'User is not active') {
-        alert('User is not active');
+        toast.error("User is not active !")
       }
+    }finally{
+      setLoading(false)
     }
   };
-  
+
   if (!isOpen) return null; // Only render the component if isOpen is true
 
   return (
@@ -94,10 +111,11 @@ function Login({ isOpen, onClose }) {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <button type="submit" 
-          className="btn text-center w-full my-5 bg-primarybtn p-2 text-lg text-white"
+          <button
+            type="submit"
+            className="btn text-center w-full my-5 bg-primarybtn p-2 text-lg text-white"
           >
-            {loading ? <Loader/> : "SigIn"}
+            {loading ? <Loader /> : "SigIn"}
           </button>
           <p>
             Forgot password?{" "}

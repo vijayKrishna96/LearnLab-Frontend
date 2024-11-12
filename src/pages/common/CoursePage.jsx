@@ -11,7 +11,7 @@ import { TfiControlForward } from "react-icons/tfi";
 function CoursePage() {
   const Id = useParams();
   console.log(Id)
-  const userCourses = useSelector(selectUserCourses);
+  const userCourses = useSelector(selectUserCourses) || [];
   // console.log(courseId.id)
 
   const [error, setError] = useState(null);
@@ -41,7 +41,7 @@ function CoursePage() {
     const fetchUserData = async () => {
       try{
         const response = await axios.get(`${USER_DETAILS_API}/${Id.userId}`)
-        setRole(response.data[0].role) 
+        setRole(response.data.users[0].role) 
       }catch(error){
         console.log(error)
       }

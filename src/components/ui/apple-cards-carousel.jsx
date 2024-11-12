@@ -144,8 +144,7 @@ export function AppleCardsCarouselDemo({instructor}) {
   const { userId } = useParams();
 
   const userData = useSelector((state) => state.user.userData);
-  console.log(userData , "data")
-
+  
    const  userRole = userData?.role
 
     // console.log(instructor)

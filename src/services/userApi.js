@@ -3,17 +3,27 @@ import { LOGIN_API, LOGOUT_API, USER_DETAILS_API } from "../Utils/Constants/Api"
 import axiosInstance from "../Routes/config/axiosInstance";
 
 export const userLogin = async (data) => {
+
   try {
-      const response = await axios({
-          url: LOGIN_API,
-          method: "POST",
-          data,
-          withCredentials: true,
-      });
-      return response;
+    const response = await axiosInstance.post(LOGIN_API, data);
+    return response;
   } catch (error) {
-    throw error.response || new Error(error.message);
+    console.log(error.response)
+    throw error;
   }
+ 
+  // try {
+  //     const response = await axios.post({
+  //         url: LOGIN_API,
+  //         // method: "POST",
+  //         data,
+  //         withCredentials: true,
+  //     });
+  //     return response;
+  // } catch (error) {
+  //   console.log(error.response , "gsagg")
+  //   throw error ;
+  // }
 };
 
 export const userLogout = async() =>{

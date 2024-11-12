@@ -26,7 +26,7 @@ const MyCourses = () => {
 
   const { userId } = useParams();
 
-  const userCourses = useSelector(selectUserCourses);
+  const userCourses = useSelector(selectUserCourses) || [];
 
   const myLearnings = allcourses.filter((course) =>
     userCourses.includes(course._id)
@@ -143,7 +143,7 @@ const MyCourses = () => {
 
   const renderMyLearnings = () => {
     return myLearnings.length > 0 ? (
-      <div className="m-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="m-10  mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         {myLearnings.map((course) => (
           <div key={course._id} className="w-full mx-auto md:mx-0 shadow-md rounded-md">
             <img

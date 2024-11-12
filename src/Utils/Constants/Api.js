@@ -1,3 +1,5 @@
+import { b } from "framer-motion/client";
+
 // Api configuration
 const BaseUrl = import.meta.env.VITE_BASE_URL ;
 
@@ -14,6 +16,7 @@ const allCourseByUserId = import.meta.env.VITE_GET_COURSEBY_USERID
 const userDetailsEndpoint = import.meta.env.VITE_USER_DETAILS;
 const updateUserDetails = import.meta.env.VITE_UPDATE_USER
 const updateInstructor = import.meta.env.VITE_UPDATE_INSTRUCTOR
+const allUsersEndpoint = import.meta.env.VITE_ALL_USERS
 
 //Category
 const AllCategoryEndpoint = import.meta.env.VITE_ALL_CATEGORY;
@@ -23,7 +26,7 @@ const cartApi = import.meta.env.VITE_CARTITEMS
 
 //Auth
 export const SIGNUP_API = BaseUrl + signupEndpoint;
-export const LOGIN_API = BaseUrl + loginEndpoint;
+export const LOGIN_API =  loginEndpoint;
 export const LOGOUT_API =BaseUrl + logoutEndpoint;
 
 //category
@@ -33,7 +36,8 @@ export const ALL_CATEGORY_API = BaseUrl + AllCategoryEndpoint;
 //user
 export const USER_DETAILS_API = BaseUrl + userDetailsEndpoint;
 export const UPDATE_USER_DETAILS = BaseUrl + updateUserDetails;
-export const UPDATE_INSTRUCTOR = BaseUrl + updateInstructor
+export const UPDATE_INSTRUCTOR = BaseUrl + updateInstructor;
+export const ALL_USERS_API = BaseUrl + allUsersEndpoint
 
 //Course
 export const  ALL_COURSE_API = BaseUrl + allCourseEndpoint

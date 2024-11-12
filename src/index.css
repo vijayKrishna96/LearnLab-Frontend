@@ -23,9 +23,11 @@
    /* Optional for text color */
 }
 
-[data-theme="dark"] #Text{
+[data-theme="dark"] #Text,
+[data-theme="dark"] .Text{
     color: #E4E6EB;
 }
+
 [data-theme="dark"] #Popup{
     color: white;
     background-color: #F5F7F8;
@@ -60,6 +62,45 @@
   background-color: #F5F7F8; /* Or any light mode color */
   color: #000000; 
 }
+
+[data-theme= "dark"] .sidebar,
+[data-theme= "dark"] .AdminHeader,
+[data-theme= "dark"] .profile{
+    background-color: #2D2D2D;
+    color: #E4E6EB;
+}
+
+
+[data-theme= "dark"] .AdminCourseCard {
+    background-color: #242424;
+}
+
+[data-theme= "dark"] .content {
+    background-color: #2C3E50;
+    color: #E4E6EB;
+}
+
+[data-theme= "dark"] .sidebarText {
+    background-color: #36393e;
+    color: #E4E6EB;
+}
+
+[data-theme= "dark"] .sidebarTextActive {
+    color: #2563EB;
+}
+
+[data-theme= "light"] .sidebarTextActive {
+    color: #2563EB;
+}
+
+[data-theme= "light"] .sidebar button:hover {
+    color: #2563EB;
+}
+
+[data-theme= "light"] .profile{
+    background-color: white;
+}
+
 
 
 

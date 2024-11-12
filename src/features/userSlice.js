@@ -28,5 +28,5 @@ const userSlice = createSlice({
 });
 
 export const {setUserData , addUserCourse} = userSlice.actions;
-export const selectUserCourses = (state) => state.user.userData.courses;
+export const selectUserCourses = (state) => state.user.userData?.courses || [];
 export default userSlice.reducer;

@@ -7,7 +7,7 @@ import {
   COURSE_BY_ID_API,
   USER_DETAILS_API,
 } from "../../Utils/Constants/Api";
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddCourse = () => {
@@ -33,9 +33,8 @@ const AddCourse = () => {
   const [selectedOption, setSelectedOption] = useState();
   const [existingImages, setExistingImages] = useState([]);
 
-  const { action, userId, id } = useParams();
+  const { action, userId , id } = useParams();
 
-  // const notify = () => toast.success("Wow so easy!");
 
   const navigate = useNavigate();
 
@@ -144,7 +143,7 @@ const AddCourse = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(`${USER_DETAILS_API}/${userId}`);
-        setUserData(response.data[0]);
+        setUserData(response?.data?.users[0]);
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
@@ -190,12 +189,12 @@ const AddCourse = () => {
     modules.forEach((module) => {
       module.lessons.forEach((lesson) => {
         if (lesson.image) {
-          formData.append("images", lesson.image);
+          formData.append("images", lesson?.image);
         }
       });
     });
 
-    if (existingImages.length > 0) {
+    if (existingImages?.length > 0) {
       formData.append("existingImages", JSON.stringify(existingImages));
     }
 
@@ -244,6 +243,8 @@ const AddCourse = () => {
       );
     }
   };
+
+  console.log(userData, "user")
 
   return (
     <div
@@ -334,7 +335,7 @@ const AddCourse = () => {
               </label>
               <input
                 type="text"
-                value={userData.name}
+                value={userData?.name}
                 className="mt-1 p-2 w-full border rounded-lg"
                 id="InputBg"
                 disabled
@@ -358,7 +359,7 @@ const AddCourse = () => {
           </div>
 
           {/* Preview existing course image in edit mode */}
-          {action === "edit" && existingImages.length > 0 && (
+          {action === "edit" && existingImages?.length > 0 && (
             <div className="mb-4">
               <label className="block text-gray-700" id="Text">
                 Current Course Image
@@ -380,7 +381,7 @@ const AddCourse = () => {
             id="Tags"
           >
             <h3 className="text-lg font-semibold mb-2" id="Text">
-              Module {module.moduleNumber}
+              Module {module?.moduleNumber}
             </h3>
             <button
               type="button"
@@ -398,7 +399,7 @@ const AddCourse = () => {
               <input
                 type="text"
                 name="title"
-                value={module.title}
+                value={module?.title}
                 onChange={(e) => handleModuleChange(moduleIndex, e)}
                 className="mt-1 p-2 w-full border rounded-lg"
                 id="InputBg"
@@ -432,7 +433,7 @@ const AddCourse = () => {
                   <input
                     type="text"
                     name="title"
-                    value={lesson.title}
+                    value={lesson?.title}
                     onChange={(e) =>
                       handleLessonChange(moduleIndex, lessonIndex, e)
                     }
@@ -450,7 +451,7 @@ const AddCourse = () => {
                   <input
                     type="text"
                     name="duration"
-                    value={lesson.duration}
+                    value={lesson?.duration}
                     onChange={(e) =>
                       handleLessonChange(moduleIndex, lessonIndex, e)
                     }
@@ -484,7 +485,7 @@ const AddCourse = () => {
                       Current Lesson Image
                     </label>
                     <img
-                      src={lesson.image}
+                      src={lesson?.image}
                       alt={`Lesson ${lessonIndex + 1}`}
                       className="mt-1 max-w-xs"
                     />
