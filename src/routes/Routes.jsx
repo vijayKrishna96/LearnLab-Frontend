@@ -22,7 +22,7 @@ import Wishlist from "../pages/common/Wishlist";
 import InstructorView from "../pages/common/InstructorView";
 
 
-export const router = createBrowserRouter([
+ const router = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout/>,
@@ -163,3 +163,5 @@ export const router = createBrowserRouter([
       ]
     }
   ]);
+
+  export default router
