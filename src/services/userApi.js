@@ -11,19 +11,6 @@ export const userLogin = async (data) => {
     console.log(error.response)
     throw error;
   }
- 
-  // try {
-  //     const response = await axios.post({
-  //         url: LOGIN_API,
-  //         // method: "POST",
-  //         data,
-  //         withCredentials: true,
-  //     });
-  //     return response;
-  // } catch (error) {
-  //   console.log(error.response , "gsagg")
-  //   throw error ;
-  // }
 };
 
 export const userLogout = async() =>{

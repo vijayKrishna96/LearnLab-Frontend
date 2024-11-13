@@ -16,7 +16,6 @@ import HomePage from "../pages/common/HomePage";
 import UserAuth from "./protectedRoutes/UserAuth";
 import AddCourse from "../pages/instructor/AddCourse";
 import LearningPage from "../pages/common/LearningPage";
-import { AppleCardsCarouselDemo } from "../components/ui/apple-cards-carousel";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import Wishlist from "../pages/common/Wishlist";

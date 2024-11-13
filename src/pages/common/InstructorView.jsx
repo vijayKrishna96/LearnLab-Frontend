@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { ALL_COURSE_API, ALL_COURSE_BY_USERID, USER_DETAILS_API } from '../../Utils/Constants/Api'
+import {  ALL_COURSE_BY_USERID, USER_DETAILS_API } from '../../Utils/Constants/Api'
 import { useParams } from 'react-router-dom'
 import CourseCard from '../../components/cards/CourseCard'
 

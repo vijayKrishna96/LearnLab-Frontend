@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Helper function to save to localStorage
+//  function to save to localStorage
 const saveToLocalStorage = (items) => {
   try {
     localStorage.setItem("wishlist", JSON.stringify({ wishlistItems: items }));
@@ -47,7 +47,6 @@ export const wishlistSlice = createSlice({
       saveToLocalStorage(state.wishlistItems);
     },
     
-    // Optional: Add these actions if you want loading states
     setWishlistLoading: (state, action) => {
       state.loading = action.payload;
     },

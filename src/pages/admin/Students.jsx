@@ -269,41 +269,7 @@ const Students = () => {
     },
   ];
 
-  // const options = {
-  //   filterType: "multiselect",
-  //   responsive: "standard",
-  //   selectableRows: "none",
-  //   download: true,
-  //   print: true,
-  //   rowsPerPage,
-  //   page,
-  //   rowsPerPageOptions: [5, 10, 25, 50],
-  //   onChangePage: handlePageChange,
-  //   onChangeRowsPerPage: handleRowsPerPageChange,
-  //   searchPlaceholder: "Search students...",
-  //   elevation: 0,
-  //   rowHover: false,
-  //   onCellClick: null,
-  //   onRowClick: null,
-  //   loadingIndicator: loading,
-  //   textLabels: {
-  //     body: {
-  //       noMatch: loading ? "Loading data..." : "No matching records found",
-  //     },
-  //   },
-
-  //   setTableProps: () => ({
-  //     sx: {
-  //       "& .MuiTableRow-root:nth-of-type(odd)": {
-  //         backgroundColor: isDarkMode ? "#252525" : "#f5f5f5",
-  //       },
-  //       "& .MuiTableRow-root:nth-of-type(even)": {
-  //         backgroundColor: isDarkMode ? "#1e1e1e" : "#ffffff",
-  //       },
-  //     },
-  //   }),
-  // };
-
+ 
 
   const options = {
     filterType: 'multiselect',
@@ -349,7 +315,7 @@ const Students = () => {
       sx={{
         backgroundColor: isDarkMode ? "#1e1e1e" : "#ffffff",
         color: isDarkMode ? "#ffffff" : "#000000",
-        overflow: "auto", // Add this line to enable scrolling within the Card component
+        overflow: "auto", 
         position: "relative",
       }}
     >

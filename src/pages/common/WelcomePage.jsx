@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { RxNotionLogo } from "react-icons/rx";
 import { CgDesignmodo } from "react-icons/cg";
 import { FaReact } from "react-icons/fa";
@@ -26,7 +25,6 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -35,7 +33,6 @@ function Home() {
         setCategories([{ _id: "all", name: "All" }, ...response.data]);
       } catch (error) {
         console.error("Error fetching categories:", error);
-        setError("Failed to load categories");
       }
     };
 
@@ -62,9 +59,6 @@ function Home() {
       try {
         setLoading(true);
         let url = ALL_COURSE_API;
-        // if (selectedCategory !== 'all') {
-        //   url += `?category=${selectedCategory}`;
-        // }
         url =
           selectedCategory === "all"
             ? url
@@ -74,7 +68,6 @@ function Home() {
         setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
-        setError("Failed to load courses");
       } finally {
         setLoading(false);
       }

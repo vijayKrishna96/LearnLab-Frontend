@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState, createContext, useContext } from "react";
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import { USER_DETAILS_API } from "../../Utils/Constants/Api";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";;
+import {  useSelector } from "react-redux";
 
 const IconArrowNarrowLeft = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

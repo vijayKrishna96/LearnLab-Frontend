@@ -22,7 +22,7 @@ export const cartSlice = createSlice({
       const existItem = state.cartItems.find((x) => x._id === newItem._id);
       
       if (existItem) {
-        // If item exists, just update its quantity or other properties
+        // If item exists,update its quantity or other properties
         state.cartItems = state.cartItems.map((x) => 
           x._id === existItem._id ? newItem : x
         );
@@ -51,7 +51,6 @@ export const cartSlice = createSlice({
       state.shippingPrice = 0;
       state.taxPrice = 0;
       state.totalPrice = 0;
-      // Keep shipping address and payment method in case they're needed
       updateCart(state);
     }
   },

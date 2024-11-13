@@ -295,8 +295,8 @@ const Instructors = () => {
         fullWidth
         PaperProps={{
           sx: {
-            backgroundColor: isDarkMode ? '#333' : '#fff',  // Dark or light background color for Dialog
-            color: isDarkMode ? '#fff' : '#000',             // Dark or light text color for Dialog
+            backgroundColor: isDarkMode ? '#333' : '#fff',  
+            color: isDarkMode ? '#fff' : '#000',             
           },
         }}
       >
@@ -304,7 +304,7 @@ const Instructors = () => {
           <>
             <DialogTitle
               sx={{
-                backgroundColor: isDarkMode ? '#2c2c2c' : '#f5f5f5', // Slightly lighter background for the title
+                backgroundColor: isDarkMode ? '#2c2c2c' : '#f5f5f5', 
                 color: isDarkMode ? '#fff' : '#0000',
               }}
             >
@@ -314,7 +314,7 @@ const Instructors = () => {
             </DialogTitle>
             <DialogContent
               sx={{
-                backgroundColor: isDarkMode ? '#2c2c2c' : '#f5f5f5', // Slightly lighter background for the content
+                backgroundColor: isDarkMode ? '#2c2c2c' : '#f5f5f5',
                 color: isDarkMode ? '#ddd' : '#000',
               }}
             >
@@ -360,9 +360,9 @@ const Instructors = () => {
                             <ListItem
                               key={studentIndex}
                               sx={{
-                                backgroundColor: isDarkMode ? '#333' : '#f5f5f5', // Background for each list item
-                                color: isDarkMode ? '#ddd' : '#000',             // Text color for each list item
-                                borderBottom: `1px solid ${isDarkMode ? '#444' : '#ddd'}`, // Optional divider color
+                                backgroundColor: isDarkMode ? '#333' : '#f5f5f5', 
+                                color: isDarkMode ? '#ddd' : '#000',            
+                                borderBottom: `1px solid ${isDarkMode ? '#444' : '#ddd'}`, 
                               }}
                             >
                               <ListItemText

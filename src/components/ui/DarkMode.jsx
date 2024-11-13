@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleDarkMode } from "../../features/darkModeSlice";
 
- // Adjust the import path as needed
-
 const DarkMode = () => {
   const dispatch = useDispatch();
   const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);

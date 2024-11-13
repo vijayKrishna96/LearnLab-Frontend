@@ -26,17 +26,6 @@ function InstructorHeader() {
 
   const userData = useSelector((state) => state.user.userData);
 
-
-
-  // const handleMouseEnter = () => {
-  //   clearTimeout(timer);
-  //   setDropdownOpen(true);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   timer = setTimeout(() => setDropdownOpen(false), 200);
-  // };
-
   const handleToggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };

@@ -6,6 +6,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import {
+  STRIPE_PAYMENT_API,
   UPDATE_COURSE_API,
   UPDATE_USER_DETAILS,
 } from "../../Utils/Constants/Api";
@@ -43,7 +44,7 @@ function Cart() {
       // Construct the full return URL using window.location
       const returnUrl = `${window.location.origin}${location.pathname}`;
 
-      const response = await fetch("http://localhost:4500/payment/create-checkout", {
+      const response = await fetch( STRIPE_PAYMENT_API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -70,7 +71,6 @@ function Cart() {
       }
     } catch (error) {
       console.error("Payment error:", error);
-      // You might want to show an error message to the user here
     } finally {
       setIsLoading(false);
     }
@@ -114,8 +114,6 @@ function Cart() {
           axios.patch(`${UPDATE_USER_DETAILS}/${instructorId}`, { students: [userId] })
         ));
 
-        // Clear URL parameters by navigating to the clean URL
-        // navigate(location.pathname, { replace: true });
         navigate(`/${userRole}/${userId}`);
       } catch (error) {
         console.error("Error processing payment success:", error);

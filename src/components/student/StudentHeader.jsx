@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../ui/Navbar/Navbar.css";
-
 import { FaHeart } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { SiAlchemy } from "react-icons/si";
@@ -26,15 +25,6 @@ function StudentHeader() {
   console.log(wishlistItems , "items")
 
   const userData = useSelector((state) => state.user.userData);
-
-  // const handleMouseEnter = () => {
-  //   clearTimeout(timer);
-  //   setDropdownOpen(true);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   timer = setTimeout(() => setDropdownOpen(false), 200);
-  // };
 
   const handleToggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -66,34 +56,6 @@ function StudentHeader() {
             <li className="hidden md:block">
               <Link to={`/student/${Id.userId}`}>Home</Link>
             </li>
-            {/* Courses Dropdown */}
-            {/* <li
-              className="navbar-dropdown flex hidden md:block"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className="flex">
-                <span>Courses</span>
-                <span>
-                  <FaSortDown />
-                </span>
-              </div>
-              {dropdownOpen && (
-                <div className="dropdown-menu">
-                  <ul className="dropdown-list">
-                   
-                    <li>
-                      <Link to="/category/development">Development</Link>
-                    </li>
-                    <li>
-                      <Link to="/category/business">Business</Link>
-                    </li>
-                    
-                  </ul>
-                </div>
-              )}
-            </li> */}
-
             
             <li className="hidden md:block">
               <Link to={`/student/aboutus/${Id.userId}`}>About Us</Link>
@@ -170,22 +132,22 @@ function StudentHeader() {
                     <ul className="dropdown-list">
                       {/* Course links */}
                       <li>
-                        <Link to="/category/development">Development</Link>
+                        <Link to="">Development</Link>
                       </li>
                       <li>
-                        <Link to="/category/business">Business</Link>
+                        <Link to="">Business</Link>
                       </li>
                       <li>
-                        <Link to="/category/development">Development</Link>
+                        <Link to="">Development</Link>
                       </li>
                       <li>
-                        <Link to="/category/business">Business</Link>
+                        <Link to="">Business</Link>
                       </li>
                       <li>
-                        <Link to="/category/development">Development</Link>
+                        <Link to="">Development</Link>
                       </li>
                       <li>
-                        <Link to="/category/business">Business</Link>
+                        <Link to="">Business</Link>
                       </li>
                       {/* Add more categories */}
                     </ul>

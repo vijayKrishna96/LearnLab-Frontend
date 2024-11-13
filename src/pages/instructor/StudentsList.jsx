@@ -337,44 +337,6 @@ const StudentsList = () => {
     }
   ];
 
-  // const options = {
-  //   filterType: 'multiselect',
-  //   responsive: 'standard',
-  //   selectableRows: 'none',
-  //   download: true,
-  //   print: true,
-  //   rowsPerPage,
-  //   rowsPerPageOptions: [5, 10, 25, 50],
-  //   count: totalCount,
-  //   page,
-  //   serverSide: true,
-  //   onChangePage: (newPage) => {
-  //     setPage(newPage);
-  //   },
-  //   onChangeRowsPerPage: (newRowsPerPage) => {
-  //     setRowsPerPage(newRowsPerPage);
-  //     setPage(0);
-  //   },
-  //   searchPlaceholder: 'Search students...',
-  //   elevation: 0,
-  //   rowHover: false,
-  //   setTableProps: () => ({
-  //     sx: {
-  //       backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
-  //       '& .MuiTableRow-root': {
-  //         backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
-  //       },
-  //       '& .MuiTableRow-root:nth-of-type(odd)': {
-  //         backgroundColor: isDarkMode ? '#252525' : '#f5f5f5',
-  //       },
-  //       '& .MuiTableRow-root:hover': {
-  //         backgroundColor: isDarkMode ? '#303030' : '#e0e0e0',
-  //       },
-  //     },
-  //   }),
-  // };
-
-
   const options = {
     filterType: 'multiselect',
     responsive: 'standard',

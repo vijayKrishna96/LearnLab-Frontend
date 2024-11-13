@@ -24,6 +24,9 @@ const AllCategoryEndpoint = import.meta.env.VITE_ALL_CATEGORY;
 //cart
 const cartApi = import.meta.env.VITE_CARTITEMS
 
+//Stripe Payment
+const StripePaymentApi = import.meta.env.VITE_STRIPE_PAYMENT
+
 //Auth
 export const SIGNUP_API = BaseUrl + signupEndpoint;
 export const LOGIN_API =  loginEndpoint;
@@ -46,3 +49,6 @@ export const  BASE_URL_CART = BaseUrl + cartApi
 export const  ALL_COURSE_BY_USERID = BaseUrl + allCourseByUserId
 export const  UPDATE_COURSE_API = BaseUrl + allCourseEndpoint
 export const  ADD_NEW_COURSE = BaseUrl + ALL_COURSE_API
+
+//STRIPE PAYMENT
+export const STRIPE_PAYMENT_API = BaseUrl + StripePaymentApi

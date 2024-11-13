@@ -22,26 +22,9 @@ function Login({ isOpen, onClose }) {
       password: password,
     };
 
-   
-    // try {
-    //   const response = await userLogin(data);
-    //   console.log(response)
-    //   if (response.status === 200) {
-    //     // Login was successful, handle the response as needed
-    //     console.log(response.data.message); // Success message
-    //   } else {
-    //     console.error(response.data.message || "An error occurred");
-    //   }
-    // } catch (error) {
-    //   console.error(error.message || "An unknown error occurred");
-    // } finally {
-    //   setLoading(false);
-    // }
-
     try {
       // Send the login data to the login route using axios
       const response = await userLogin(data);
-      // setLoading(false);
       console.log(response.data.message)
       const userId = response.data.user.id; // Extract userId from the response
 

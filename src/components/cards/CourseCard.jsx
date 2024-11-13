@@ -12,26 +12,6 @@ function CourseCard({ role, course }) {
 
   const dispatch = useDispatch();
 
-  // const wishlistItems = useSelector((state) => state.wishlist.items); // Update according to your store structure
-
-  // // Add local state to ensure immediate UI update
-  // const [isWishlisted, setIsWishlisted] = useState(false);
-
-  // // Update local state when wishlist items change
-  // useEffect(() => {
-  //   const inWishlist = wishlistItems?.some((item) => item._id === course?._id);
-  //   console.log(inWishlist, "innn")
-  //   setIsWishlisted(inWishlist);
-  // }, [wishlistItems, course?._id]);
-
-  // const handleWishlistToggle = () => {
-  //   if (isWishlisted) {
-  //     dispatch(removeWishlistItem({ courseId: course?._id, userId }));
-  //   } else {
-  //     dispatch(addItemToWishlist({ ...course, userId }));
-  //   }
-  //   // Remove immediate toggle, let useEffect handle the UI update
-  // };
   const wishlistItems = useSelector(selectWishlistItems);
 
   const [isWishlisted, setIsWishlisted] = useState(false);

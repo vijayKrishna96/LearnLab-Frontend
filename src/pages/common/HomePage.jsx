@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "../../components/cards/CourseCard";
 import { useParams } from "react-router-dom";
-
-
 import axios from "axios";
 import {
   ALL_CATEGORY_API,
@@ -11,7 +9,6 @@ import {
 } from "../../Utils/Constants/Api";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../features/userSlice";
-// import InstructorCarousel from "../../components/carousels/InstructorCarousel";
 import { AppleCardsCarouselDemo } from "../../components/ui/apple-cards-carousel";
 
 
@@ -47,9 +44,6 @@ const HomePage = () => {
       try {
         setLoading(true);
         let url = ALL_COURSE_API;
-        // if (selectedCategory !== 'all') {
-        //   url += `?category=${selectedCategory}`;
-        // }
         url =
           selectedCategory === "all"
             ? url
@@ -74,10 +68,9 @@ const HomePage = () => {
         const response = await axios.get(`${USER_DETAILS_API}/user/${userId} `);
         // console.log("User details response:", response.data[0]);
         setUsersData(response.data[0]);
-        // Handle the response data as needed (e.g., set it in state)
       } catch (error) {
         console.error("Error fetching user details:", error);
-        // Handle the error (e.g., show an error message)
+        // Handle the error 
       }
     };
 
@@ -188,15 +181,11 @@ const HomePage = () => {
                   onClick={() => setSelectedCategory(category._id)}
                 >
                   {category.name}
-                  {/* {type.charAt(0).toUpperCase() + type.slice(1)} */}
                 </button>
               ))}
             </div>
 
             {/* Course Grid Section */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 lg:gap-x-16 gap-y-5 mt-10">
-              {/* {renderCategory()} */}
-            </div>
             {loading ? (
               <div className="text-center">Loading...</div>
             ) : (

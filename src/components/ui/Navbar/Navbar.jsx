@@ -13,7 +13,7 @@ function Navbar() {
 
   const handleOpenLoginModal = () => {
     setIsLoginModalOpen(true);
-    setIsSignUpModalOpen(false); // Close signup when opening login
+    setIsSignUpModalOpen(false); 
   };
 
   const handleCloseLoginModal = () => {
@@ -22,7 +22,7 @@ function Navbar() {
 
   const handleOpenSignUpModal = () => {
     setIsSignUpModalOpen(true);
-    setIsLoginModalOpen(false); // Close login when opening signup
+    setIsLoginModalOpen(false); 
   };
 
   const handleCloseSignUpModal = () => {

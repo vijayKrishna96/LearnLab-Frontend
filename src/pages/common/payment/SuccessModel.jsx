@@ -56,7 +56,7 @@ const SuccessModal = ({ isOpen, onClose }) => {
           </div>
 
           <p className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-            {message}
+            
           </p>
 
           <button

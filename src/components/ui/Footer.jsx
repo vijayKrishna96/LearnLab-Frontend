@@ -2,9 +2,9 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="mt-12  p-6 bg-primary" id="Tags">
-      <div className="max-w-7xl mx-auto grid grid-cols-12 gap-6">
-        <div className="col-span-3" id="Text">
+    <footer className="mt-12 p-6 bg-primary" id="Tags">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="" id="Text">
           <div className="flex items-center space-x-2">
             <img
               src="https://via.placeholder.com/40"
@@ -16,7 +16,7 @@ function Footer() {
           <p className="text-sm mt-2">+91 91813 23 2309</p>
           <p className="text-sm mt-2">Somewhere in the World</p>
         </div>
-        <div className="col-span-3" id="Text">
+        <div className="" id="Text">
           <h4 className="font-semibold">Home</h4>
           <ul className="text-sm space-y-1 mt-2">
             <li>Benefits</li>
@@ -25,7 +25,7 @@ function Footer() {
             <li>Our FAQ</li>
           </ul>
         </div>
-        <div className="col-span-3" id="Text">
+        <div className="" id="Text">
           <h4 className="font-semibold">About Us</h4>
           <ul className="text-sm space-y-1 mt-2">
             <li>Company</li>
@@ -33,7 +33,7 @@ function Footer() {
             <li>Our Goals</li>
           </ul>
         </div>
-        <div className="col-span-3" id="Text">
+        <div className="" id="Text">
           <h4 className="font-semibold">Social Profiles</h4>
           <div className="flex space-x-3 mt-2">
             <img src="https://via.placeholder.com/20" alt="Facebook" />
