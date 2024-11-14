@@ -1,3 +1,4 @@
+import React from 'react'
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/common/WelcomePage";
@@ -21,8 +22,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import Wishlist from "../pages/common/Wishlist";
 import InstructorView from "../pages/common/InstructorView";
 
-
- const router = createBrowserRouter([
+const RouterConfig = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout/>,
@@ -164,4 +164,5 @@ import InstructorView from "../pages/common/InstructorView";
     }
   ]);
 
-  export default router
+
+export default RouterConfig
