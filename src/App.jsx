@@ -1,6 +1,6 @@
 
 import { RouterProvider } from 'react-router-dom';
-import RouterConfig from './Routes/RouterConfig';
+import RouterConfig from './AppRoutes/RouterConfig';
 
 
 

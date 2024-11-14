@@ -1,6 +1,6 @@
 import axios from "axios"
 import { LOGIN_API, LOGOUT_API, USER_DETAILS_API } from "../Utils/Constants/Api"
-import axiosInstance from "../Routes/config/axiosInstance";
+import axiosInstance from "../AppRoutes/config/axiosInstance";
 
 export const userLogin = async (data) => {
 
