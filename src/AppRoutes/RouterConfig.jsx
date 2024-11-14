@@ -10,7 +10,7 @@ import Cart from "../components/ui/Cart";
 import CoursePage from "../pages/common/CoursePage";
 import AboutUs from "../pages/common/AboutUs";
 import ContactUs from "../pages/common/ContactUs";
-import MyLearnings from "../pages/student/myLearnings";
+import MyLearnings from "../pages/student/MyLearnings";
 import StudentsList from "../pages/instructor/StudentsList";
 import MyCourses from "../pages/instructor/MyCourses";
 import HomePage from "../pages/common/HomePage";
