@@ -55,6 +55,7 @@ function InstructorProfile() {
       const response = await axios.post(LOGOUT_API);
       if (response?.data?.success) {
         dispatch(setUserData({}));
+        localStorage.removeItem('token');
         navigate("/");
       }
     } catch (error) {

@@ -26,7 +26,8 @@ import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../../features/userSlice";
 
 const DashboardView = () => {
   const [value, setValue] = useState(dayjs());
@@ -200,6 +201,7 @@ const AdminDashboard = () => {
 
   const navigate = useNavigate();
   const { userId } = useParams();
+  const dispatch = useDispatch();
 
   console.log(userData, "data");
 
@@ -276,6 +278,8 @@ const AdminDashboard = () => {
     try {
       const response = await axios.post(LOGOUT_API);
       if (response?.data?.success) {
+        localStorage.removeItem('token');
+        dispatch(setUserData({}));
         navigate("/");
       }
     } catch (error) {

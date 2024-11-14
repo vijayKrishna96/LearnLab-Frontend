@@ -4,13 +4,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import { LOGOUT_API, UPDATE_USER_DETAILS } from "../../Utils/Constants/Api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "../../features/userSlice";
 
 function StudentProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams();
   const userData = useSelector((state) => state.user.userData);
+
+  const dispatch = useDispatch()
 
   const [formsData, setFormData] = useState({
     name: "",
@@ -49,6 +52,8 @@ function StudentProfile() {
     try {
       const response = await axios.post(LOGOUT_API);
       if (response?.data?.success) {
+        dispatch(setUserData({}));
+        localStorage.removeItem('token');
         navigate("/");
       }
     } catch (error) {
