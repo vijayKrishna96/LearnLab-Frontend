@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   ALL_CATEGORY_API,
   COURSE_BY_ID_API,
+  UPDATE_COURSE_API,
   USER_DETAILS_API,
 } from "../../Utils/Constants/Api";
 import {  toast } from 'react-toastify';
@@ -213,7 +214,7 @@ const AddCourse = () => {
       let response;
       if (action === "edit") {
         response = await axios.patch(
-          `http://localhost:4500/course/${id}`,
+          `${UPDATE_COURSE_API}/${id}`,
           formData,
           {
             headers: {
@@ -224,7 +225,7 @@ const AddCourse = () => {
         toast.success("Successfully Updated course")
         navigate(-1)
       } else if (action === "add") {
-        response = await axios.post(`http://localhost:4500/course`, formData, {
+        response = await axios.post(`${UPDATE_COURSE_API}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
