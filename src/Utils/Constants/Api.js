@@ -1,4 +1,4 @@
-import { b } from "framer-motion/client";
+
 
 // Api configuration
 const BaseUrl = import.meta.env.VITE_BASE_URL ;
@@ -27,9 +27,11 @@ const cartApi = import.meta.env.VITE_CARTITEMS
 //Stripe Payment
 const StripePaymentApi = import.meta.env.VITE_STRIPE_PAYMENT
 
+export const BASE_URL_API = BaseUrl
+
 //Auth
 export const SIGNUP_API = BaseUrl + signupEndpoint;
-export const LOGIN_API =  loginEndpoint;
+export const LOGIN_API =  BaseUrl + loginEndpoint;
 export const LOGOUT_API =BaseUrl + logoutEndpoint;
 
 //category

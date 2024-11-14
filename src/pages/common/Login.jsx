@@ -16,45 +16,52 @@ function Login({ isOpen, onClose }) {
   const handleLogin = async (event) => {
     event.preventDefault();
     setLoading(true);
-
+  
     const data = {
       email: email,
       password: password,
     };
-
+  
     try {
-      // Send the login data to the login route using axios
+      // Send the login data to the login route using axios with credentials
       const response = await userLogin(data);
-      console.log(response.data.message)
+      
       const userId = response.data.user.id; // Extract userId from the response
-
+      const token = response.data.token; // Get the token from the response (ensure your backend sends it)
+  
+      // Save the token to localStorage
+      if (token) {
+        localStorage.setItem('authToken', token);
+      }
+  
+      // Navigate based on user role
       if (response.data.user.role === 'student') {
-        // Navigate to student route with userId
         navigate(`/student/${userId}`);
         onClose(); // Close the modal
-        
       } else if (response.data.user.role === 'instructor') {
-        // Navigate to instructor route with userId
         navigate(`/instructor/${userId}`);
         onClose();
-      }else if (response.data.user.role === 'admin'){
+      } else if (response.data.user.role === 'admin') {
         navigate(`/admin/${userId}`);
         onClose();
       }
     } catch (err) {
       // Handle error cases
-      console.log(err.response)
+      console.log(err.response);
       if (err.response?.data?.message === 'User not found') {
-        toast.error("User not Found, Check the UserID !")
+        toast.error("User not Found, Check the UserID !");
       } else if (err.response?.data?.message === "Invalid password") {
-        toast.error("Invalid password, please try again !")
+        toast.error("Invalid password, please try again !");
       } else if (err.response?.data?.message === 'User is not active') {
-        toast.error("User is not active !")
+        toast.error("User is not active !");
+      } else {
+        toast.error("An error occurred. Please try again later.");
       }
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
+
 
   if (!isOpen) return null; // Only render the component if isOpen is true
 
